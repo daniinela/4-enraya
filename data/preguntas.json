@@ -1,0 +1,108 @@
+{
+  "categorias": {
+    "programacion": {
+      "facil": [
+        {"pregunta": "¿Qué símbolo se usa para comentar en Python?", "opciones": ["//", "#", "/*", "--"], "correcta": 1},
+        {"pregunta": "¿Qué significa HTML?", "opciones": ["HyperText Markup Language", "High Text Machine Language", "HyperTool Multi Language", "Hyper Transfer Markup"], "correcta": 0},
+        {"pregunta": "¿Cuál es el resultado de 2 + 2 * 2?", "opciones": ["8", "6", "4", "2"], "correcta": 1},
+        {"pregunta": "¿Qué hace un bucle 'for'?", "opciones": ["Repite código varias veces", "Declara variables", "Crea funciones", "Importa librerías"], "correcta": 0},
+        {"pregunta": "¿Qué es una variable?", "opciones": ["Un tipo de función", "Un espacio para guardar datos", "Un lenguaje de programación", "Un operador matemático"], "correcta": 1},
+        {"pregunta": "¿Cuál es la extensión de un archivo Python?", "opciones": [".java", ".py", ".js", ".cpp"], "correcta": 1},
+        {"pregunta": "¿Qué significa CSS?", "opciones": ["Computer Style Sheets", "Cascading Style Sheets", "Creative Style System", "Code Style Sheets"], "correcta": 1}
+      ],
+      "media": [
+        {"pregunta": "¿Qué es la recursividad?", "opciones": ["Una función que se llama a sí misma", "Un tipo de bucle", "Una estructura de datos", "Un patrón de diseño"], "correcta": 0},
+        {"pregunta": "¿Qué estructura usa LIFO?", "opciones": ["Cola", "Pila", "Lista", "Árbol"], "correcta": 1},
+        {"pregunta": "¿Qué es una API?", "opciones": ["Un lenguaje de programación", "Una interfaz para comunicar programas", "Un tipo de base de datos", "Un framework de CSS"], "correcta": 1},
+        {"pregunta": "¿Qué es Git?", "opciones": ["Un lenguaje de programación", "Un sistema de control de versiones", "Un editor de código", "Un servidor web"], "correcta": 1},
+        {"pregunta": "¿Qué hace el método .sort() en Python?", "opciones": ["Elimina duplicados", "Ordena una lista", "Invierte una lista", "Cuenta elementos"], "correcta": 1},
+        {"pregunta": "¿Qué es la complejidad O(n)?", "opciones": ["Tiempo constante", "Tiempo lineal", "Tiempo cuadrático", "Tiempo logarítmico"], "correcta": 1}
+      ],
+      "dificil": [
+        {"pregunta": "¿Qué es un deadlock en programación concurrente?", "opciones": ["Un error de memoria", "Dos procesos bloqueados esperándose mutuamente", "Un tipo de excepción", "Un bucle infinito"], "correcta": 1},
+        {"pregunta": "¿Qué algoritmo tiene complejidad O(n log n) en promedio?", "opciones": ["Bubble Sort", "Insertion Sort", "Quick Sort", "Selection Sort"], "correcta": 2},
+        {"pregunta": "¿Qué es el patrón Singleton?", "opciones": ["Permite solo una instancia de una clase", "Crea múltiples instancias", "Es un tipo de herencia", "Es un algoritmo de búsqueda"], "correcta": 0},
+        {"pregunta": "¿Qué es un puntero en C?", "opciones": ["Una variable que guarda un valor", "Una variable que guarda una dirección de memoria", "Un tipo de función", "Un operador lógico"], "correcta": 1},
+        {"pregunta": "¿Qué es la normalización en bases de datos?", "opciones": ["Encriptar datos", "Organizar datos para reducir redundancia", "Hacer copias de seguridad", "Indexar tablas"], "correcta": 1}
+      ]
+    },
+    "ciencia": {
+      "facil": [
+        {"pregunta": "¿Cuántos planetas tiene el sistema solar?", "opciones": ["7", "8", "9", "10"], "correcta": 1},
+        {"pregunta": "¿Qué gas respiramos principalmente?", "opciones": ["Oxígeno", "Nitrógeno", "CO2", "Hidrógeno"], "correcta": 1},
+        {"pregunta": "¿A qué velocidad viaja la luz?", "opciones": ["200.000 km/s", "300.000 km/s", "400.000 km/s", "150.000 km/s"], "correcta": 1},
+        {"pregunta": "¿Cuántos huesos tiene el cuerpo humano adulto?", "opciones": ["206", "215", "198", "223"], "correcta": 0},
+        {"pregunta": "¿Qué planeta es el más grande del sistema solar?", "opciones": ["Saturno", "Neptuno", "Júpiter", "Urano"], "correcta": 2},
+        {"pregunta": "¿Cuál es la fórmula del agua?", "opciones": ["H2O", "CO2", "NaCl", "O2"], "correcta": 0},
+        {"pregunta": "¿Qué es la fotosíntesis?", "opciones": ["Proceso de respiración animal", "Proceso por el que las plantas producen energía", "Tipo de reproducción", "Movimiento celular"], "correcta": 1}
+      ],
+      "media": [
+        {"pregunta": "¿Qué es el ADN?", "opciones": ["Una proteína", "El ácido desoxirribonucleico que contiene información genética", "Un tipo de célula", "Una enzima digestiva"], "correcta": 1},
+        {"pregunta": "¿Cuál es la unidad de medida de la frecuencia?", "opciones": ["Voltio", "Amperio", "Hercio", "Newton"], "correcta": 2},
+        {"pregunta": "¿Qué es la fusión nuclear?", "opciones": ["Separar núcleos atómicos", "Unir núcleos atómicos liberando energía", "Quemar combustible fósil", "Dividir moléculas"], "correcta": 1},
+        {"pregunta": "¿Qué ley describe que F = ma?", "opciones": ["Primera ley de Newton", "Segunda ley de Newton", "Tercera ley de Newton", "Ley de gravitación"], "correcta": 1},
+        {"pregunta": "¿Cuántos cromosomas tiene una célula humana normal?", "opciones": ["23", "46", "48", "44"], "correcta": 1},
+        {"pregunta": "¿Qué es un agujero negro?", "opciones": ["Una estrella fría", "Una región con gravedad tan intensa que nada escapa", "Un planeta destruido", "Una nebulosa oscura"], "correcta": 1}
+      ],
+      "dificil": [
+        {"pregunta": "¿Qué es el principio de incertidumbre de Heisenberg?", "opciones": ["No se puede conocer posición y velocidad exactas simultáneamente", "La energía se conserva", "Los gases se expanden", "La luz viaja en línea recta"], "correcta": 0},
+        {"pregunta": "¿Cuál es el número de Avogadro aproximadamente?", "opciones": ["6.022 × 10²³", "3.141 × 10¹⁵", "9.109 × 10³¹", "1.602 × 10¹⁹"], "correcta": 0},
+        {"pregunta": "¿Qué es la entropía en termodinámica?", "opciones": ["Medida del calor total", "Medida del desorden de un sistema", "Velocidad de reacción química", "Presión de un gas"], "correcta": 1},
+        {"pregunta": "¿Qué partícula subatómica tiene carga negativa?", "opciones": ["Protón", "Neutrón", "Electrón", "Bosón"], "correcta": 2},
+        {"pregunta": "¿Qué es la relatividad especial de Einstein?", "opciones": ["Las leyes de la física son iguales en todos los marcos de referencia inerciales", "La gravedad curva el espacio", "Los átomos son indivisibles", "La luz se comporta como onda"], "correcta": 0}
+      ]
+    },
+    "entretenimiento": {
+      "facil": [
+        {"pregunta": "¿De qué juego es el personaje Monokuma?", "opciones": ["Persona", "Danganronpa", "Zero Escape", "Ace Attorney"], "correcta": 1},
+        {"pregunta": "¿Qué color es la ficha de Kirby?", "opciones": ["Rojo", "Amarillo", "Rosa", "Azul"], "correcta": 2},
+        {"pregunta": "¿En qué ciudad vive Bob Esponja?", "opciones": ["Coral City", "Fondo de Bikini", "Atlantis", "Pelican Island"], "correcta": 1},
+        {"pregunta": "¿Cuántas canciones tiene la saga principal de Friday Night Funkin semana 1?", "opciones": ["2", "3", "4", "5"], "correcta": 1},
+        {"pregunta": "¿Quién es el creador de Minecraft?", "opciones": ["Gabe Newell", "Notch", "Todd Howard", "Hideo Kojima"], "correcta": 1},
+        {"pregunta": "¿En qué año salió Among Us?", "opciones": ["2016", "2017", "2018", "2019"], "correcta": 2},
+        {"pregunta": "¿Qué personaje dice 'It's a me, Mario'?", "opciones": ["Luigi", "Wario", "Mario", "Toad"], "correcta": 2}
+      ],
+      "media": [
+        {"pregunta": "¿Quién compuso la música de Undertale?", "opciones": ["Toby Fox", "Masashi Hamauzu", "Nobuo Uematsu", "Koji Kondo"], "correcta": 0},
+        {"pregunta": "¿Cuántos personajes tiene la primera semana de Danganronpa?", "opciones": ["14", "15", "16", "17"], "correcta": 2},
+        {"pregunta": "¿Qué estudio desarrolló Hollow Knight?", "opciones": ["Playdead", "Team Cherry", "Motion Twin", "Supergiant"], "correcta": 1},
+        {"pregunta": "¿En qué año se estrenó la primera temporada de Attack on Titan?", "opciones": ["2011", "2012", "2013", "2014"], "correcta": 2},
+        {"pregunta": "¿Cuál es el nombre real de Light Yagami en Death Note?", "opciones": ["Kira", "Light Yagami", "Ryuk", "L Lawliet"], "correcta": 1},
+        {"pregunta": "¿Qué personaje de FNF es el padre de Boyfriend?", "opciones": ["Daddy Dearest", "Pico", "Skid", "Whitty"], "correcta": 0}
+      ],
+      "dificil": [
+        {"pregunta": "¿Cuántos finales tiene la novela visual de Danganronpa Trigger Happy Havoc?", "opciones": ["1", "2", "3", "4"], "correcta": 1},
+        {"pregunta": "¿Qué engine usa Friday Night Funkin?", "opciones": ["Unity", "Godot", "HaxeFlixel", "GameMaker"], "correcta": 2},
+        {"pregunta": "¿Cuál es el nombre del compositor principal de la música de Danganronpa?", "opciones": ["Masafumi Takada", "Toby Fox", "Yoko Shimomura", "Nobuo Uematsu"], "correcta": 0},
+        {"pregunta": "¿En qué capítulo de Danganronpa muere Sayaka Maizono?", "opciones": ["Prólogo", "Capítulo 1", "Capítulo 2", "Capítulo 3"], "correcta": 1},
+        {"pregunta": "¿Cuántos juegos principales tiene la saga Danganronpa?", "opciones": ["2", "3", "4", "5"], "correcta": 1}
+      ]
+    },
+    "arte": {
+      "facil": [
+        {"pregunta": "¿Quién pintó la Mona Lisa?", "opciones": ["Miguel Ángel", "Leonardo da Vinci", "Rafael", "Botticelli"], "correcta": 1},
+        {"pregunta": "¿Cuántos colores primarios hay?", "opciones": ["2", "3", "4", "5"], "correcta": 1},
+        {"pregunta": "¿Qué instrumento tiene 88 teclas?", "opciones": ["Guitarra", "Violín", "Piano", "Flauta"], "correcta": 2},
+        {"pregunta": "¿Qué es una escultura?", "opciones": ["Una pintura en pared", "Una obra tridimensional", "Un tipo de fotografía", "Un dibujo digital"], "correcta": 1},
+        {"pregunta": "¿Qué color resulta de mezclar azul y amarillo?", "opciones": ["Naranja", "Morado", "Verde", "Café"], "correcta": 2},
+        {"pregunta": "¿Quién esculpió El David?", "opciones": ["Leonardo da Vinci", "Rafael", "Miguel Ángel", "Donatello"], "correcta": 2},
+        {"pregunta": "¿Qué es el origami?", "opciones": ["Arte japonés del papel doblado", "Pintura con arena", "Escultura en madera", "Arte con telas"], "correcta": 0}
+      ],
+      "media": [
+        {"pregunta": "¿Qué movimiento artístico inició Pablo Picasso?", "opciones": ["Surrealismo", "Cubismo", "Impresionismo", "Expresionismo"], "correcta": 1},
+        {"pregunta": "¿Qué es el claroscuro en pintura?", "opciones": ["Técnica de colores brillantes", "Contraste entre luz y sombra", "Pintura al aire libre", "Arte abstracto"], "correcta": 1},
+        {"pregunta": "¿Quién pintó La noche estrellada?", "opciones": ["Claude Monet", "Paul Gauguin", "Vincent van Gogh", "Edvard Munch"], "correcta": 2},
+        {"pregunta": "¿Qué es una sinfonía?", "opciones": ["Una canción popular", "Una composición musical larga para orquesta", "Un instrumento de viento", "Un tipo de ópera"], "correcta": 1},
+        {"pregunta": "¿En qué país nació Frida Kahlo?", "opciones": ["Argentina", "Colombia", "México", "España"], "correcta": 2},
+        {"pregunta": "¿Qué es el arte abstracto?", "opciones": ["Arte que representa la realidad exactamente", "Arte que no representa objetos reconocibles", "Arte medieval", "Arte digital"], "correcta": 1}
+      ],
+      "dificil": [
+        {"pregunta": "¿Qué técnica usaba Seurat llamada puntillismo?", "opciones": ["Pintar con espátula", "Pintar con pequeños puntos de color puro", "Pintar con acuarela diluida", "Pintar con los dedos"], "correcta": 1},
+        {"pregunta": "¿En qué año se construyó la Capilla Sixtina?", "opciones": ["1473", "1481", "1512", "1536"], "correcta": 1},
+        {"pregunta": "¿Qué es el contrapunto en música?", "opciones": ["Técnica de dos melodías independientes simultáneas", "Un tipo de ritmo", "Una escala musical", "Un instrumento barroco"], "correcta": 0},
+        {"pregunta": "¿Quién fue el principal exponente del Dadaísmo?", "opciones": ["Salvador Dalí", "Marcel Duchamp", "Andy Warhol", "Jackson Pollock"], "correcta": 1},
+        {"pregunta": "¿Qué es la perspectiva isométrica en arte?", "opciones": ["Vista desde arriba", "Representación 3D sin punto de fuga", "Pintura en espejo", "Arte con geometría circular"], "correcta": 1}
+      ]
+    }
+  }
+}

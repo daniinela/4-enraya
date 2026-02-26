@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://xlo1x3l1sutg"]
+
+[ext_resource type="Script" uid="uid://bur5i46wvybfj" path="res://scripts/trivia.gd" id="1_cguqc"]
+
+[node name="Trivia" type="Node2D" unique_id=2062966170]
+script = ExtResource("1_cguqc")
+
+[node name="LabelCategoria" type="Label" parent="." unique_id=460290564]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="LabelPregunta" type="Label" parent="." unique_id=1270033659]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="LabelTemporizador" type="Label" parent="." unique_id=1644144448]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Opcion1" type="Button" parent="." unique_id=1109038909]
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Opcion2" type="Button" parent="." unique_id=66264236]
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Opcion3" type="Button" parent="." unique_id=387405757]
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Opcion4" type="Button" parent="." unique_id=680338918]
+offset_right = 8.0
+offset_bottom = 8.0

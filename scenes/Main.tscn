@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://di8nopsvul4nw"]
+
+[ext_resource type="Script" uid="uid://c8xaeyy6ufwlh" path="res://scripts/game_manager.gd" id="1_elqb8"]
+[ext_resource type="PackedScene" uid="uid://bo2e8ehtxsnob" path="res://scenes/Board.tscn" id="2_0bbpv"]
+[ext_resource type="PackedScene" uid="uid://ciwuf6j5erokq" path="res://scenes/UI.tscn" id="3_rarhs"]
+
+[node name="Main" type="Node2D" unique_id=1442963063]
+script = ExtResource("1_elqb8")
+
+[node name="Board" parent="." unique_id=1037535901 instance=ExtResource("2_0bbpv")]
+
+[node name="UI" parent="." unique_id=1673272493 instance=ExtResource("3_rarhs")]
+position = Vector2(24, -90)

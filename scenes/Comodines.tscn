@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://b2tvcnpgh6tbk"]
+
+[ext_resource type="Script" uid="uid://dqk5x272pnmmk" path="res://scripts/Comodines.gd" id="1_rfsdn"]
+
+[node name="Comodines" type="Node2D" unique_id=1439508739]
+script = ExtResource("1_rfsdn")

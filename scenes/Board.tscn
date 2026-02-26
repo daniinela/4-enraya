@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://bo2e8ehtxsnob"]
+
+[ext_resource type="Script" uid="uid://l74k3i5vwr4r" path="res://scripts/board.gd" id="1_qails"]
+[ext_resource type="Texture2D" uid="uid://dgdu4ij5q4sl8" path="res://assets/ChatGPT Image 25 feb 2026, 19_22_01.png" id="2_hs2ul"]
+
+[node name="Board" type="Node2D" unique_id=1037535901]
+script = ExtResource("1_qails")
+
+[node name="fichas" type="GridContainer" parent="." unique_id=728526396]
+custom_minimum_size = Vector2(630, 540)
+offset_left = 337.0
+offset_top = 84.0
+offset_right = 1180.0
+offset_bottom = 650.0
+columns = 7
+
+[node name="spriteTablero" type="Sprite2D" parent="." unique_id=1318706239]
+position = Vector2(782.99994, 334)
+scale = Vector2(0.881, 0.85)
+texture = ExtResource("2_hs2ul")
