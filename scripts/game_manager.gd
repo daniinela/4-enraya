@@ -6,7 +6,7 @@ var turno_saltado = false
 var bloqueado = false
 
 @onready var tablero = $Board
-@onready var ui = $UI
+@onready var ui = $CanvasLayer/UI
 
 var trivia_scene = preload("res://scenes/Trivia.tscn")
 var comodines_scene = preload("res://scenes/Comodines.tscn")
@@ -46,7 +46,7 @@ func iniciar_trivia():
 	bloqueado = true
 	var trivia = trivia_scene.instantiate()
 	trivia.name = "Trivia"
-	add_child(trivia)
+	$CanvasLayer.add_child(trivia)
 	trivia.jugador_actual = turno_actual
 	trivia.juego = self
 
@@ -64,7 +64,7 @@ func mostrar_seleccion_comodin():
 	bloqueado = true
 	var comodines = comodines_scene.instantiate()
 	comodines.name = "Comodines"
-	add_child(comodines)
+	$CanvasLayer.add_child(comodines)
 	comodines.juego = self
 	comodines.jugador_actual = turno_actual
 
@@ -96,7 +96,7 @@ func mostrar_pantalla_victoria():
 	fondo.color = Color(0, 0, 0, 0.9)
 	fondo.size = Vector2(1152, 648)
 	fondo.position = Vector2(0, 0)
-	add_child(fondo)
+	$CanvasLayer.add_child(fondo)
 
 	var label = Label.new()
 	label.position = Vector2(350, 200)
@@ -107,14 +107,14 @@ func mostrar_pantalla_victoria():
 	else:
 		label.text = "¡Ganó el Jugador Rojo!"
 		label.modulate = Color(1.0, 0.2, 0.2)
-	add_child(label)
+	$CanvasLayer.add_child(label)
 
 	var btn = Button.new()
 	btn.text = "Jugar de nuevo"
 	btn.position = Vector2(450, 350)
 	btn.custom_minimum_size = Vector2(200, 60)
 	btn.pressed.connect(_reiniciar_juego)
-	add_child(btn)
+	$CanvasLayer.add_child(btn)
 
 func _reiniciar_juego():
 	get_tree().reload_current_scene()
