@@ -9,5 +9,8 @@ script = ExtResource("1_elqb8")
 
 [node name="Board" parent="." unique_id=1037535901 instance=ExtResource("2_0bbpv")]
 
-[node name="UI" parent="." unique_id=1673272493 instance=ExtResource("3_rarhs")]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=271787047]
+
+[node name="UI" parent="CanvasLayer" unique_id=1673272493 instance=ExtResource("3_rarhs")]
+z_index = 5
 position = Vector2(24, -90)
