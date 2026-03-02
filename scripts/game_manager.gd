@@ -16,7 +16,7 @@ var conteo_categorias = {
 	2: {"programacion": 0, "ciencia": 0, "entretenimiento": 0, "arte": 0}
 }
 
-func _readyPruebaCommit1():
+func _ready():
 	tablero.game_manager = self
 	actualizar_ui()
 
