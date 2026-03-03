@@ -162,7 +162,7 @@ func _input(event):
 			actualizar_preview_bomba(event.position)
 		return
 
-	var pos = event.position
+	var pos = get_global_mouse_position()
 
 	if esperando_escudo:
 		var resultado = obtener_hueco_click(pos)

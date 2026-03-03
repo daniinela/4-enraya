@@ -11,11 +11,11 @@ func _ready():
 
 func actualizar_turno(jugador: int):
 	if jugador == 1:
-		label_turno.text = "Turno: Jugador Azul"
-		label_turno.modulate = Color(0.2, 0.4, 1.0)
+		label_turno.text = "Turno: Denji"
+		label_turno.modulate = Color(1.0, 0.85, 0.0)
 	else:
-		label_turno.text = "Turno: Jugador Rojo"
-		label_turno.modulate = Color(1.0, 0.2, 0.2)
+		label_turno.text = "Turno: Reze"
+		label_turno.modulate = Color(0.7, 0.2, 1.0)
 
 func actualizar_comodines(comodines: Dictionary):
 	label_comodines_j1.text = "Comodines Azul: " + str(comodines[1])

@@ -2,48 +2,65 @@ extends Node2D
 
 var juego = null
 var jugador_actual = 1
-var elegido = false  # Evitar doble clic
+var elegido = false
+
+var fuente_bangers: FontFile
+var fuente_cinzel: FontFile
 
 func _ready():
+	fuente_bangers = load("res://assets/fonts/Bangers-Regular.ttf")
+	fuente_cinzel = load("res://assets/fonts/Cinzel-Bold.ttf")
+
 	var fondo = ColorRect.new()
-	fondo.color = Color(0, 0, 0, 0.9)
-	fondo.size = Vector2(1152, 648)
-	fondo.position = Vector2(0, 0)
+	fondo.color = Color(0.05, 0.05, 0.15, 0.95)
+	fondo.size = Vector2(1800, 900)
+	fondo.position = Vector2.ZERO
 	add_child(fondo)
 	move_child(fondo, 0)
 
 	var titulo = Label.new()
-	titulo.text = "¡Elegí tu comodín!"
-	titulo.position = Vector2(400, 80)
-	titulo.add_theme_font_size_override("font_size", 28)
+	titulo.text = "⚡ ELIGE TU COMODÍN ⚡"
+	titulo.position = Vector2(480, 80)
+	titulo.add_theme_font_override("font", fuente_bangers)
+	titulo.add_theme_font_size_override("font_size", 58)
+	titulo.add_theme_color_override("font_color", Color(1.0, 0.85, 0.0))
 	add_child(titulo)
 
-	var btn_bomba = Button.new()
-	btn_bomba.text = "💣 BOMBA\nElimina fichas en área de 5 casillas"
-	btn_bomba.position = Vector2(150, 200)
-	btn_bomba.custom_minimum_size = Vector2(250, 100)
-	btn_bomba.pressed.connect(_elegir_comodin.bind("bomba"))
-	add_child(btn_bomba)
+	_crear_boton("💣 BOMBA\n\nElimina fichas\nen área de 5 casillas", "bomba", Vector2(280, 260), Color(1.0, 0.3, 0.1))
+	_crear_boton("⏭ SALTAR\nTURNO\n\nEl rival pierde\nsu próximo turno", "saltar_turno", Vector2(680, 260), Color(0.2, 0.6, 1.0))
+	_crear_boton("🛡 ESCUDO\n\nProtege 2 fichas\ntuyas de la bomba", "escudo", Vector2(1080, 260), Color(0.4, 0.9, 0.4))
 
-	var btn_saltar = Button.new()
-	btn_saltar.text = "⏭ SALTAR TURNO\nEl rival pierde su próximo turno"
-	btn_saltar.position = Vector2(450, 200)
-	btn_saltar.custom_minimum_size = Vector2(250, 100)
-	btn_saltar.pressed.connect(_elegir_comodin.bind("saltar_turno"))
-	add_child(btn_saltar)
+func _crear_boton(texto: String, tipo: String, pos: Vector2, color: Color):
+	var btn = Button.new()
+	btn.text = texto
+	btn.position = pos
+	btn.custom_minimum_size = Vector2(340, 350)
 
-	var btn_escudo = Button.new()
-	btn_escudo.text = "🛡 ESCUDO\nProtege 2 fichas tuyas de la bomba"
-	btn_escudo.position = Vector2(750, 200)
-	btn_escudo.custom_minimum_size = Vector2(250, 100)
-	btn_escudo.pressed.connect(_elegir_comodin.bind("escudo"))
-	add_child(btn_escudo)
+	var style_normal = StyleBoxFlat.new()
+	style_normal.bg_color = color.darkened(0.3)
+	style_normal.border_color = color
+	style_normal.set_border_width_all(4)
+	style_normal.set_corner_radius_all(20)
+	btn.add_theme_stylebox_override("normal", style_normal)
+
+	var style_hover = StyleBoxFlat.new()
+	style_hover.bg_color = color
+	style_hover.border_color = color.lightened(0.4)
+	style_hover.set_border_width_all(4)
+	style_hover.set_corner_radius_all(20)
+	btn.add_theme_stylebox_override("hover", style_hover)
+
+	btn.add_theme_font_override("font", fuente_bangers)
+	btn.add_theme_font_size_override("font_size", 28)
+	btn.add_theme_color_override("font_color", Color(1, 1, 1))
+
+	btn.pressed.connect(_elegir_comodin.bind(tipo))
+	add_child(btn)
 
 func _elegir_comodin(tipo: String):
 	if elegido:
 		return
 	elegido = true
-	# Deshabilitar todos los botones
 	for hijo in get_children():
 		if hijo is Button:
 			hijo.disabled = true

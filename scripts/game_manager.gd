@@ -92,30 +92,41 @@ func jugador_gano():
 	mostrar_pantalla_victoria()
 
 func mostrar_pantalla_victoria():
+	var fuente_bangers = load("res://assets/fonts/Bangers-Regular.ttf")
+	var fuente_cinzel = load("res://assets/fonts/Cinzel-Bold.ttf")
 	var fondo = ColorRect.new()
-	fondo.color = Color(0, 0, 0, 0.9)
-	fondo.size = Vector2(1152, 648)
+	fondo.color = Color(0.05, 0.05, 0.15, 0.95)
+	fondo.size = Vector2(1800, 900)
 	fondo.position = Vector2(0, 0)
 	$CanvasLayer.add_child(fondo)
-
 	var label = Label.new()
-	label.position = Vector2(350, 200)
-	label.add_theme_font_size_override("font_size", 48)
+	label.position = Vector2(400, 280)
+	label.add_theme_font_override("font", fuente_bangers)
+	label.add_theme_font_size_override("font_size", 80)
 	if turno_actual == 1:
-		label.text = "¡Ganó el Jugador Azul!"
-		label.modulate = Color(0.2, 0.4, 1.0)
+		label.text = "🏆 ¡GANÓ DENJI! 🏆"
+		label.add_theme_color_override("font_color", Color(1.0, 0.85, 0.0))
 	else:
-		label.text = "¡Ganó el Jugador Rojo!"
-		label.modulate = Color(1.0, 0.2, 0.2)
+		label.text = "🏆 ¡GANÓ REZE! 🏆"
+		label.add_theme_color_override("font_color", Color(0.7, 0.2, 1.0))
 	$CanvasLayer.add_child(label)
 
 	var btn = Button.new()
-	btn.text = "Jugar de nuevo"
-	btn.position = Vector2(450, 350)
-	btn.custom_minimum_size = Vector2(200, 60)
+	btn.text = "JUGAR DE NUEVO"
+	btn.position = Vector2(600, 480)
+	btn.custom_minimum_size = Vector2(300, 80)
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.2, 0.2, 0.5)
+	style.border_color = Color(0.6, 0.3, 1.0)
+	style.set_border_width_all(4)
+	style.set_corner_radius_all(16)
+	btn.add_theme_stylebox_override("normal", style)
+	btn.add_theme_font_override("font", fuente_bangers)
+	btn.add_theme_font_size_override("font_size", 36)
+	btn.add_theme_color_override("font_color", Color(1, 1, 1))
 	btn.pressed.connect(_reiniciar_juego)
 	$CanvasLayer.add_child(btn)
-
+	
 func _reiniciar_juego():
 	get_tree().reload_current_scene()
 
