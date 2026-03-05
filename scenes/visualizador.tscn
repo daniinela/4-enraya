@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://gjholtquenyr"]
+
+[ext_resource type="Script" uid="uid://dw4wopaajk4o5" path="res://scripts/visualizador.gd" id="1_2qt2a"]
+
+[node name="visualizador" type="Node2D" unique_id=1129442854]
+script = ExtResource("1_2qt2a")

@@ -132,6 +132,14 @@ func _reiniciar_juego():
 
 func actualizar_ui():
 	ui.actualizar_turno(turno_actual)
+	var denji = $PersonajeDenji
+	var reze = $PersonajeReze
+	if turno_actual == 1:
+		denji.activar_turno()
+		reze.desactivar_turno()
+	else:
+		denji.desactivar_turno()
+		reze.activar_turno()
 
 func obtener_conteo_categoria(jugador: int, categoria: String) -> int:
 	return conteo_categorias[jugador][categoria]

@@ -4,8 +4,9 @@ const COLUMNAS = 7
 const FILAS = 6
 
 const COLOR_GRIS = Color(0.5, 0.5, 0.5)
-const COLOR_RULETA = Color(1.0, 0.85, 0.0, 0.4)
-const COLOR_BOMBA_PREVIEW = Color(1.0, 0.3, 0.0, 0.5)
+const COLOR_RULETA = Color(1.0, 0.85, 0.0, 0.6)
+const COLOR_BOMBA_PREVIEW = Color(1.0, 0.3, 0.0, 0.6)
+const COLOR_FICHA_ELIMINAR = Color(1.0, 0.2, 0.2, 0.8)
 
 var tablero = []
 var trampas = []
@@ -106,22 +107,31 @@ func actualizar_sprites():
 			else:
 				sprite.modulate = Color(1, 1, 1)
 
+func _get_cell_rect(fila: int, col: int) -> Rect2:
+	var grid = $fichas
+	var cell = Vector2(120, 94)
+	var x = grid.position.x + col * cell.x
+	var y = grid.position.y + fila * cell.y
+	return Rect2(x, y, cell.x, cell.y)
+
 func _draw():
+	for casilla in bomba_preview:
+		var rect = _get_cell_rect(casilla.x, casilla.y)
+		draw_rect(rect, COLOR_BOMBA_PREVIEW)
+		draw_rect(rect, Color(1.0, 0.1, 0.1, 1.0), false, 3.0)
 	if ruleta_activa:
 		var grid = $fichas
 		var cell = Vector2(120, 94)
 		if ruleta_es_columna:
 			var x = grid.position.x + ruleta_indice * cell.x
-			draw_rect(Rect2(x, grid.position.y, cell.x, FILAS * cell.y), COLOR_RULETA)
+			var rect = Rect2(x, grid.position.y, cell.x, FILAS * cell.y)
+			draw_rect(rect, COLOR_RULETA)
+			draw_rect(rect, Color(1.0, 0.9, 0.0, 1.0), false, 4.0)
 		else:
 			var y = grid.position.y + ruleta_indice * cell.y
-			draw_rect(Rect2(grid.position.x, y, COLUMNAS * cell.x, cell.y), COLOR_RULETA)
-	for casilla in bomba_preview:
-		var grid = $fichas
-		var cell = Vector2(120, 94)
-		var x = grid.position.x + casilla.y * cell.x
-		var y = grid.position.y + casilla.x * cell.y
-		draw_rect(Rect2(x, y, cell.x, cell.y), COLOR_BOMBA_PREVIEW)
+			var rect = Rect2(grid.position.x, y, COLUMNAS * cell.x, cell.y)
+			draw_rect(rect, COLOR_RULETA)
+			draw_rect(rect, Color(1.0, 0.9, 0.0, 1.0), false, 4.0)
 
 func _process(delta):
 	if not ruleta_activa:
@@ -141,11 +151,50 @@ func _process(delta):
 			ruleta_activa = false
 			ruleta_indice = ruleta_destino
 			queue_redraw()
-			await get_tree().create_timer(0.8).timeout
+			_finalizar_ruleta()
+	if not ruleta_activa:
+		return
+	ruleta_timer -= delta
+	if ruleta_timer <= 0:
+		ruleta_timer = ruleta_velocidad
+		if ruleta_es_columna:
+			ruleta_indice = (ruleta_indice + 1) % COLUMNAS
+		else:
+			ruleta_indice = (ruleta_indice + 1) % FILAS
+		queue_redraw()
+		ruleta_pasos_restantes -= 1
+		if ruleta_pasos_restantes < 10:
+			ruleta_velocidad = lerp(ruleta_velocidad, 0.25, 0.2)
+		if ruleta_pasos_restantes <= 0:
+			ruleta_activa = false
+			ruleta_indice = ruleta_destino
+			queue_redraw()
+			await _animar_ruleta_final(ruleta_destino, ruleta_es_columna)
 			if ruleta_es_columna:
 				borrar_columna(ruleta_destino)
 			else:
 				borrar_fila(ruleta_destino)
+
+func _finalizar_ruleta():
+	await _animar_ruleta_final(ruleta_destino, ruleta_es_columna)
+	if ruleta_es_columna:
+		borrar_columna(ruleta_destino)
+	else:
+		borrar_fila(ruleta_destino)
+		
+func _animar_ruleta_final(indice: int, es_columna: bool):
+	for _i in range(4):
+		if es_columna:
+			for fila in range(FILAS):
+				if tablero[fila][indice] != 0:
+					sprites_fichas[fila][indice].modulate = Color(1.0, 0.15, 0.15)
+		else:
+			for col in range(COLUMNAS):
+				if tablero[indice][col] != 0:
+					sprites_fichas[indice][col].modulate = Color(1.0, 0.15, 0.15)
+		await get_tree().create_timer(0.18).timeout
+		actualizar_sprites()
+		await get_tree().create_timer(0.18).timeout
 
 func _input(event):
 	if juego_terminado or ruleta_activa:
@@ -157,12 +206,12 @@ func _input(event):
 	for hijo in game_manager.get_children():
 		if hijo.name == "Trivia" or hijo.name == "Comodines":
 			return
-	if not (event is InputEventMouseButton and event.pressed):
-		if esperando_bomba and event is InputEventMouseMotion:
-			actualizar_preview_bomba(event.position)
-		return
-
 	var pos = get_global_mouse_position()
+	if esperando_bomba and event is InputEventMouseMotion:
+		actualizar_preview_bomba(pos)
+		return
+	if not (event is InputEventMouseButton and event.pressed):
+		return
 
 	if esperando_escudo:
 		var resultado = obtener_hueco_click(pos)
@@ -186,6 +235,7 @@ func _input(event):
 	if esperando_bomba:
 		var resultado = obtener_hueco_click(pos)
 		if resultado.x >= 0:
+			_limpiar_preview_fichas()
 			activar_bomba(resultado.x, resultado.y)
 			bomba_preview = []
 			queue_redraw()
@@ -196,13 +246,10 @@ func _input(event):
 		intentar_colocar_ficha(col)
 
 func obtener_hueco_click(pos: Vector2) -> Vector2i:
-	var grid = $fichas
-	var cell = Vector2(120, 94)
 	for fila in range(FILAS):
 		for col in range(COLUMNAS):
-			var x = grid.position.x + col * cell.x
-			var y = grid.position.y + fila * cell.y
-			if pos.x >= x and pos.x <= x + cell.x and pos.y >= y and pos.y <= y + cell.y:
+			var rect = _get_cell_rect(fila, col)
+			if rect.has_point(pos):
 				return Vector2i(fila, col)
 	return Vector2i(-1, -1)
 
@@ -220,6 +267,7 @@ func obtener_columna_click(pos: Vector2) -> int:
 	return -1
 
 func actualizar_preview_bomba(pos: Vector2):
+	_limpiar_preview_fichas()
 	bomba_preview = []
 	var resultado = obtener_hueco_click(pos)
 	if resultado.x < 0:
@@ -234,7 +282,17 @@ func actualizar_preview_bomba(pos: Vector2):
 	for c in candidatos:
 		if c.x >= 0 and c.x < FILAS and c.y >= 0 and c.y < COLUMNAS:
 			bomba_preview.append(c)
+			if tablero[c.x][c.y] != 0:
+				sprites_fichas[c.x][c.y].modulate = Color(1.0, 0.2, 0.2)
 	queue_redraw()
+
+func _limpiar_preview_fichas():
+	for fila in range(FILAS):
+		for col in range(COLUMNAS):
+			if escudos[fila][col] and tablero[fila][col] != 0:
+				sprites_fichas[fila][col].modulate = Color(1.0, 0.85, 0.0)
+			else:
+				sprites_fichas[fila][col].modulate = Color(1, 1, 1)
 
 func intentar_colocar_ficha(columna: int):
 	if not game_manager or not game_manager.juego_activo: return
