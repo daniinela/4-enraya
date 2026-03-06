@@ -1,0 +1,102 @@
+[gd_scene format=3 uid="uid://bmy0gkbw2h7d8"]
+
+[ext_resource type="Script" uid="uid://bmni0qn8fwvhv" path="res://scripts/reglas.gd" id="1_xkoio"]
+
+[node name="reglas" type="Control" unique_id=729751956]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xkoio")
+
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=373862798]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -14.0
+offset_top = 26.0
+offset_right = -14.0
+offset_bottom = 26.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.24115598, 0.2411561, 0.24115604, 1)
+
+[node name="Panel" type="Panel" parent="." unique_id=1819995205]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="." unique_id=2036517033]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -322.0
+offset_top = -392.0
+offset_right = 344.0
+offset_bottom = -243.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.77168405, 0.77168405, 0.7716839, 1)
+theme_override_font_sizes/font_size = 80
+text = "Reglas para jugar"
+
+[node name="Label2" type="Label" parent="." unique_id=1055382894]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -392.0
+offset_top = -240.0
+offset_right = 487.3999
+offset_bottom = 329.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Objetivo
+Conecta 4 fichas seguidas en horizontal, vertical o diagonal para ganar la partida.
+
+Bombas ocultas
+Algunas casillas del tablero contienen bombas escondidas.
+Si colocas una ficha en una de ellas, aparecerá una pregunta.
+
+Respuesta correcta
+Si respondes la pregunta correctamente, obtendrás un poder especial al azar:
+
+💣 Bomba: elimina fichas cercanas del tablero.
+
+⏭️ Saltar turno: el oponente pierde su próximo turno.
+
+🛡️ Escudo: protege 4 de tus fichas contra efectos negativos.
+
+Respuesta incorrecta
+Si respondes mal la pregunta, ocurrirá un evento negativo:
+
+Se eliminará una fila o columna al azar del tablero.
+
+Aparecerá una ficha de piedra que no podrá usarse durante el resto de la partida."
+
+[node name="Button" type="Button" parent="." unique_id=102919800]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 0.16900001
+anchor_bottom = 1.0
+offset_left = 47.0
+offset_top = -121.0
+offset_right = 112.79999
+offset_bottom = -44.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 50
+text = "Menu Principal"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

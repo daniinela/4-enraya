@@ -104,10 +104,10 @@ func mostrar_pantalla_victoria():
 	label.add_theme_font_override("font", fuente_bangers)
 	label.add_theme_font_size_override("font_size", 80)
 	if turno_actual == 1:
-		label.text = "🏆 ¡GANÓ DENJI! 🏆"
+		label.text = "🏆 ¡GANÓ " + Global.Jugador1 + "! 🏆"
 		label.add_theme_color_override("font_color", Color(1.0, 0.85, 0.0))
 	else:
-		label.text = "🏆 ¡GANÓ REZE! 🏆"
+		label.text = "🏆 ¡GANÓ " + Global.Jugador2 + "! 🏆"
 		label.add_theme_color_override("font_color", Color(0.7, 0.2, 1.0))
 	$CanvasLayer.add_child(label)
 

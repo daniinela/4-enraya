@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://dfdixccw2v6x0"]
+
+[ext_resource type="Script" uid="uid://5bnq3yxlvs7n" path="res://scripts/nombres.gd" id="1_xs0ja"]
+[ext_resource type="FontFile" uid="uid://oggxmpn0mv4y" path="res://assets/fonts/Bangers-Regular.ttf" id="2_xs0ja"]
+
+[node name="Nombres" type="Control" unique_id=2106158932]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xs0ja")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1457738858]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.588
+anchor_right = 0.5
+anchor_bottom = 0.588
+offset_left = -361.0
+offset_top = -303.2
+offset_right = 375.5
+offset_bottom = 137.29999
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Nombre1" type="Label" parent="VBoxContainer" unique_id=1193867080]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7662716, 0.13774186, 0, 1)
+theme_override_fonts/font = ExtResource("2_xs0ja")
+theme_override_font_sizes/font_size = 45
+text = "Nombre Jugador 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Jugador1" type="LineEdit" parent="VBoxContainer" unique_id=1367171403]
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+
+[node name="Nombre2" type="Label" parent="VBoxContainer" unique_id=1895603457]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7662716, 0.13774186, 0, 1)
+theme_override_fonts/font = ExtResource("2_xs0ja")
+theme_override_font_sizes/font_size = 45
+text = "Nombre Jugador 2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Jugador2" type="LineEdit" parent="VBoxContainer/Nombre2" unique_id=2060460596]
+layout_mode = 0
+offset_left = -6.0
+offset_top = 65.0
+offset_right = 730.0
+offset_bottom = 96.0
+theme_override_font_sizes/font_size = 45
+
+[node name="Empezar" type="Button" parent="VBoxContainer/Nombre2" unique_id=1536668413]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 236.0
+offset_right = 741.0
+offset_bottom = 307.0
+theme_override_font_sizes/font_size = 45
+text = "Empezar juego"
+
+[connection signal="pressed" from="VBoxContainer/Nombre2/Empezar" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Nombre2/Empezar" to="." method="_on_empezar_pressed"]
