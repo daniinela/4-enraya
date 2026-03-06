@@ -6,9 +6,11 @@ extends Control
 
 var fuente_cinzel: FontFile
 
+
 func _ready():
 	fuente_cinzel = load("res://assets/fonts/Cinzel-Bold.ttf")
 	estilizar_boton(boton_empezar, Color(0.3, 0.6, 1.0))
+
 
 func estilizar_boton(btn: Button, color: Color):
 
@@ -31,12 +33,26 @@ func estilizar_boton(btn: Button, color: Color):
 	btn.add_theme_color_override("font_color", Color(1,1,1))
 
 
+
+func _on_button_reze_pressed() -> void:
+	Global.personaje_jugador1 = "reze"
+	Global.personaje_jugador2 = "denji"
+	print("Elegiste Reze")
+	
+
+
+
+func _on_button_denji_pressed() -> void:
+	Global.personaje_jugador1 = "denji"
+	Global.personaje_jugador2 = "reze"
+	print("Elegiste denji")
+
 func _on_empezar_pressed() -> void:
-
-	print(jugador1_input)
-	print(jugador2_input)
-
 	Global.Jugador1 = jugador1_input.text
 	Global.Jugador2 = jugador2_input.text
-	
+
+	print("Jugador 1:", Global.Jugador1)
+	print("Jugador 2:", Global.Jugador2)
+	print("Personaje elegido:", Global.personaje_jugador1)
+
 	get_tree().change_scene_to_file("res://scenes/Main.tscn")

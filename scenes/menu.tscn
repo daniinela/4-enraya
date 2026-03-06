@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://6fq7nj1bhwih"]
 
 [ext_resource type="Script" uid="uid://bhn0b112ngf8u" path="res://scripts/menu.gd" id="1_vjb58"]
-[ext_resource type="Texture2D" uid="uid://cxfcm57qwhr5h" path="res://assets/ChatGPT Image 5 mar 2026, 04_10_39 p.m..png" id="1_yqeox"]
+[ext_resource type="Texture2D" uid="uid://c4mmy4lbijex1" path="res://assets/ChatGPT Image 6 mar 2026, 03_42_15 p.m..png" id="2_i6lef"]
 [ext_resource type="Texture2D" uid="uid://bgdat7gyhahao" path="res://assets/personajes/reze/spritesheet_reze.png" id="3_4ytvr"]
 [ext_resource type="Texture2D" uid="uid://couvpqq0i245" path="res://assets/fondo_menu.png" id="3_13sgg"]
+[ext_resource type="FontFile" uid="uid://c1m47i20k3qc8" path="res://assets/fonts/Smile City.otf" id="4_70i5f"]
 [ext_resource type="Script" path="res://scripts/personaje_reze.gd" id="4_g3eks"]
 [ext_resource type="Texture2D" uid="uid://c5qant2eam4ts" path="res://assets/personajes/denji/spritesheetDenji.png" id="5_g3eks"]
 [ext_resource type="Script" uid="uid://dmdfeu7s0tlsb" path="res://scripts/personaje_denji.gd" id="5_v86rl"]
@@ -878,31 +879,27 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_vjb58")
 
-[node name="TextureRect2" type="TextureRect" parent="." unique_id=1790515152]
-visible = false
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=1605376872]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = 4.0
-offset_right = 16.0
-offset_bottom = 128.0
+offset_left = 5.0
+offset_top = 2.0
+offset_right = 5.0
+offset_bottom = 126.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_yqeox")
-expand_mode = 1
+texture = ExtResource("2_i6lef")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=959533087]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 1)
+color = Color(0.21960784, 0.21960784, 0.21960784, 0.4117647)
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1125809614]
 layout_mode = 1
@@ -932,22 +929,25 @@ offset_right = 184.0
 offset_bottom = 151.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 26
+theme_override_constants/separation = 48
 
 [node name="Button" type="Button" parent="VBoxContainer" unique_id=673010627]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_70i5f")
 theme_override_font_sizes/font_size = 56
 theme_override_styles/normal = SubResource("StyleBoxTexture_vjb58")
 text = "JUGAR"
 
 [node name="Button2" type="Button" parent="VBoxContainer" unique_id=399976718]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_70i5f")
 theme_override_font_sizes/font_size = 55
 theme_override_styles/normal = SubResource("StyleBoxLine_con2f")
 text = "REGLAS"
 
 [node name="Button3" type="Button" parent="VBoxContainer" unique_id=2062339057]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_70i5f")
 theme_override_font_sizes/font_size = 55
 theme_override_styles/normal = SubResource("StyleBoxLine_con2f")
 text = "SALIR"

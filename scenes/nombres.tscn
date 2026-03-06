@@ -1,7 +1,19 @@
 [gd_scene format=3 uid="uid://dfdixccw2v6x0"]
 
 [ext_resource type="Script" uid="uid://5bnq3yxlvs7n" path="res://scripts/nombres.gd" id="1_xs0ja"]
+[ext_resource type="Texture2D" uid="uid://c4mmy4lbijex1" path="res://assets/ChatGPT Image 6 mar 2026, 03_42_15 p.m..png" id="2_l58nm"]
 [ext_resource type="FontFile" uid="uid://oggxmpn0mv4y" path="res://assets/fonts/Bangers-Regular.ttf" id="2_xs0ja"]
+[ext_resource type="Texture2D" uid="uid://c5qant2eam4ts" path="res://assets/personajes/denji/spritesheetDenji.png" id="4_l676c"]
+[ext_resource type="Texture2D" uid="uid://bgdat7gyhahao" path="res://assets/personajes/reze/spritesheet_reze.png" id="5_fie4x"]
+[ext_resource type="AudioStream" uid="uid://bqw5nrvrwasbd" path="res://assets/music/Dangan Ronpa Execution songs.mp3" id="6_l676c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l58nm"]
+atlas = ExtResource("5_fie4x")
+region = Rect2(2432.0996, 2615.65, 486, 781.6499)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l676c"]
+atlas = ExtResource("4_l676c")
+region = Rect2(1712.1001, 4924.8, 388.7998, 761.4004)
 
 [node name="Nombres" type="Control" unique_id=2106158932]
 layout_mode = 3
@@ -11,6 +23,44 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xs0ja")
+
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=965458531]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 2.0
+offset_right = 5.0
+offset_bottom = 126.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_l58nm")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1015446582]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.21960784, 0.21960784, 0.21960784, 0.4117647)
+
+[node name="button_reze" type="TextureButton" parent="." unique_id=515708311]
+layout_mode = 0
+offset_left = 1165.0
+offset_top = 81.0
+offset_right = 1651.0
+offset_bottom = 862.0
+texture_normal = SubResource("AtlasTexture_l58nm")
+
+[node name="button_denji" type="TextureButton" parent="." unique_id=1431458555]
+layout_mode = 0
+offset_left = 182.0
+offset_top = 85.0
+offset_right = 570.0
+offset_bottom = 846.0
+texture_normal = SubResource("AtlasTexture_l676c")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1457738858]
 layout_mode = 1
@@ -65,5 +115,12 @@ offset_bottom = 307.0
 theme_override_font_sizes/font_size = 45
 text = "Empezar juego"
 
-[connection signal="pressed" from="VBoxContainer/Nombre2/Empezar" to="." method="_on_button_pressed"]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=452990394]
+stream = ExtResource("6_l676c")
+volume_db = -13.684
+autoplay = true
+
+[connection signal="pressed" from="button_reze" to="." method="_on_button_reze_pressed"]
+[connection signal="pressed" from="button_denji" to="." method="_on_button_denji_pressed"]
 [connection signal="pressed" from="VBoxContainer/Nombre2/Empezar" to="." method="_on_empezar_pressed"]
+[connection signal="pressed" from="VBoxContainer/Nombre2/Empezar" to="." method="_on_button_pressed"]

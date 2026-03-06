@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ciwuf6j5erokq"]
 
 [ext_resource type="Script" uid="uid://1lb4nnfouyww" path="res://scripts/ui.gd" id="1_dj8aq"]
+[ext_resource type="FontFile" uid="uid://ba53b1iw3nseg" path="res://assets/fonts/Cinzel-Bold.ttf" id="2_ro3t7"]
 
 [node name="UI" type="Node2D" unique_id=1673272493]
 script = ExtResource("1_dj8aq")
@@ -10,7 +11,8 @@ offset_left = 810.0
 offset_top = 96.0
 offset_right = 966.0
 offset_bottom = 119.0
-theme_override_font_sizes/font_size = 50
+theme_override_fonts/font = ExtResource("2_ro3t7")
+theme_override_font_sizes/font_size = 56
 text = "Turno: Jugador Azul "
 horizontal_alignment = 1
 vertical_alignment = 1

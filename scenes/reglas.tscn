@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://bmy0gkbw2h7d8"]
 
 [ext_resource type="Script" uid="uid://bmni0qn8fwvhv" path="res://scripts/reglas.gd" id="1_xkoio"]
+[ext_resource type="Texture2D" uid="uid://c4mmy4lbijex1" path="res://assets/ChatGPT Image 6 mar 2026, 03_42_15 p.m..png" id="2_xkoio"]
+[ext_resource type="AudioStream" uid="uid://bqw5nrvrwasbd" path="res://assets/music/Dangan Ronpa Execution songs.mp3" id="3_j27l4"]
 
 [node name="reglas" type="Control" unique_id=729751956]
 layout_mode = 3
@@ -11,18 +13,27 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xkoio")
 
-[node name="ColorRect2" type="ColorRect" parent="." unique_id=373862798]
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=1944648506]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -14.0
-offset_top = 26.0
-offset_right = -14.0
-offset_bottom = 26.0
+offset_left = 5.0
+offset_top = 2.0
+offset_right = 5.0
+offset_bottom = 126.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.24115598, 0.2411561, 0.24115604, 1)
+texture = ExtResource("2_xkoio")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1265746705]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.21960784, 0.21960784, 0.21960784, 0.4117647)
 
 [node name="Panel" type="Panel" parent="." unique_id=1819995205]
 layout_mode = 1
@@ -98,5 +109,10 @@ offset_bottom = -44.0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 50
 text = "Menu Principal"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1101507080]
+stream = ExtResource("3_j27l4")
+volume_db = -13.684
+autoplay = true
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
