@@ -123,4 +123,3 @@ autoplay = true
 [connection signal="pressed" from="button_reze" to="." method="_on_button_reze_pressed"]
 [connection signal="pressed" from="button_denji" to="." method="_on_button_denji_pressed"]
 [connection signal="pressed" from="VBoxContainer/Nombre2/Empezar" to="." method="_on_empezar_pressed"]
-[connection signal="pressed" from="VBoxContainer/Nombre2/Empezar" to="." method="_on_button_pressed"]

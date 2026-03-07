@@ -2,6 +2,7 @@ extends AnimatedSprite2D
 
 var silueta: AnimatedSprite2D = null
 
+
 func _ready():
 	# reproducir animación del personaje
 	play("idle")
@@ -31,31 +32,27 @@ func _process(_delta):
 		silueta.frame = frame
 
 
-func activar_turno():
+func cambiar_turno(activo: bool):
 	if silueta == null:
 		return
 
 	var tween = create_tween()
 
-	tween.tween_property(self, "scale", Vector2(1.2, 1.2), 0.4)
-	tween.parallel().tween_property(
-		silueta,
-		"modulate",
-		Color(1.0, 0.85, 0.0, 0.7),
-		0.4
-	)
-
-
-func desactivar_turno():
-	if silueta == null:
-		return
-
-	var tween = create_tween()
-
-	tween.tween_property(self, "scale", Vector2(1.1, 1.1), 0.4)
-	tween.parallel().tween_property(
-		silueta,
-		"modulate",
-		Color(1.0, 0.85, 0.0, 0.0),
-		0.4
-	)
+	if activo:
+		# activar turno
+		tween.tween_property(self, "scale", Vector2(1.2, 1.2), 0.4)
+		tween.parallel().tween_property(
+			silueta,
+			"modulate",
+			Color(1.0, 0.85, 0.0, 0.7),
+			0.4
+		)
+	else:
+		# desactivar turno
+		tween.tween_property(self, "scale", Vector2(1, 1), 0.4)
+		tween.parallel().tween_property(
+			silueta,
+			"modulate",
+			Color(1.0, 0.85, 0.0, 0.0),
+			0.4
+		)

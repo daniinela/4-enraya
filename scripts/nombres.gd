@@ -48,6 +48,10 @@ func _on_button_denji_pressed() -> void:
 	print("Elegiste denji")
 
 func _on_empezar_pressed() -> void:
+	if Global.personaje_jugador1 == "":
+		print("Debes elegir un personaje antes de empezar")
+		return
+
 	Global.Jugador1 = jugador1_input.text
 	Global.Jugador2 = jugador2_input.text
 

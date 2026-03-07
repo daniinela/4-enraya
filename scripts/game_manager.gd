@@ -195,20 +195,20 @@ func actualizar_ui():
 	if Global.personaje_jugador1 == "denji":
 
 		if turno_actual == 1:
-			denji.activar_turno()
-			reze.desactivar_turno()
+			denji.cambiar_turno(true)
+			reze.cambiar_turno(false)
 		else:
-			denji.desactivar_turno()
-			reze.activar_turno()
+			denji.cambiar_turno(false)
+			reze.cambiar_turno(true)
 
 	else:
 
 		if turno_actual == 1:
-			reze.activar_turno()
-			denji.desactivar_turno()
+			reze.cambiar_turno(true)
+			denji.cambiar_turno(false)
 		else:
-			reze.desactivar_turno()
-			denji.activar_turno()
+			reze.cambiar_turno(false)
+			denji.cambiar_turno(true)
 
 
 func obtener_conteo_categoria(jugador: int, categoria: String) -> int:
