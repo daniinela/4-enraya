@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ccv8hckp1c4mn"
+path="res://.godot/imported/Balatro Main Theme.mp3-5eca15b9d94b9e7a00812ee728ded293.mp3str"
+
+[deps]
+
+source_file="res://assets/music/Balatro Main Theme.mp3"
+dest_files=["res://.godot/imported/Balatro Main Theme.mp3-5eca15b9d94b9e7a00812ee728ded293.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,3 +1,4 @@
+#ui.gd
 extends Node2D
 
 @onready var label_turno = $LabelTurno
@@ -10,24 +11,26 @@ func _ready():
 	label_comodines_j2.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 func actualizar_turno(jugador: int):
-	if jugador == 1:
-		label_turno.text = "Turno: Denji"
+	var nombre = Global.Jugador1 if jugador == 1 else Global.Jugador2
+	var personaje = Global.personaje_jugador1 if jugador == 1 else Global.personaje_jugador2
+	label_turno.text = "Turno: " + nombre
+	if personaje == "denji":
 		label_turno.modulate = Color(1.0, 0.85, 0.0)
 	else:
-		label_turno.text = "Turno: Reze"
 		label_turno.modulate = Color(0.7, 0.2, 1.0)
 
 func actualizar_comodines(comodines: Dictionary):
 	label_comodines_j1.text = "Comodines Azul: " + str(comodines[1])
 	label_comodines_j2.text = "Comodines Rojo: " + str(comodines[2])
-
+	
 func mostrar_ganador(jugador: int):
-	if jugador == 1:
-		label_turno.text = "¡Ganó el Jugador Azul!"
-		label_turno.modulate = Color(0.2, 0.4, 1.0)
+	var nombre = Global.Jugador1 if jugador == 1 else Global.Jugador2
+	var personaje = Global.personaje_jugador1 if jugador == 1 else Global.personaje_jugador2
+	label_turno.text = "¡Ganó " + nombre + "!"
+	if personaje == "denji":
+		label_turno.modulate = Color(1.0, 0.85, 0.0)
 	else:
-		label_turno.text = "¡Ganó el Jugador Rojo!"
-		label_turno.modulate = Color(1.0, 0.2, 0.2)
+		label_turno.modulate = Color(0.7, 0.2, 1.0)
 
 func mostrar_mensaje(texto: String):
 	label_turno.text = texto

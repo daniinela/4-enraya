@@ -1,3 +1,4 @@
+#visualizador.gd
 extends Node2D
 
 const NUM_BARRAS = 80

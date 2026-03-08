@@ -1,3 +1,4 @@
+#trivia.gd
 extends Control
 
 @onready var label_pregunta = $LabelPregunta

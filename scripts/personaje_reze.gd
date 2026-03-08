@@ -1,3 +1,4 @@
+#personaje_reze
 extends AnimatedSprite2D
 
 var silueta: AnimatedSprite2D = null

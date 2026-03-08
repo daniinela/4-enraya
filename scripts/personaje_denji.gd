@@ -1,3 +1,4 @@
+#personaje_denji
 extends AnimatedSprite2D
 
 var silueta: AnimatedSprite2D = null

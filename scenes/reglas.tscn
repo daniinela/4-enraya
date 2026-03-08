@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://bmy0gkbw2h7d8"]
+
+[ext_resource type="Script" uid="uid://bmni0qn8fwvhv" path="res://scripts/reglas.gd" id="1_emkjy"]
+[ext_resource type="Texture2D" uid="uid://ccov7vkror6ws" path="res://assets/fondo_menu.png" id="2_j27l4"]
+[ext_resource type="FontFile" uid="uid://oggxmpn0mv4y" path="res://assets/fonts/Bangers-Regular.ttf" id="3_qq8th"]
+
+[node name="Reglas" type="Control" unique_id=1778904930]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_emkjy")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1602375345]
+layout_mode = 0
+offset_right = 1803.0
+offset_bottom = 1216.0
+texture = ExtResource("2_j27l4")
+
+[node name="Label" type="Label" parent="." unique_id=254462911]
+layout_mode = 0
+offset_left = 797.0
+offset_top = 56.0
+offset_right = 992.0
+offset_bottom = 142.0
+theme_override_fonts/font = ExtResource("3_qq8th")
+theme_override_font_sizes/font_size = 80
+text = "REGLAS"
+
+[node name="Label2" type="Label" parent="." unique_id=450858025]
+layout_mode = 0
+offset_left = 424.0
+offset_top = 149.0
+offset_right = 1632.0
+offset_bottom = 894.0
+theme_override_fonts/font = ExtResource("3_qq8th")
+theme_override_font_sizes/font_size = 31
+text = "⚔  OBJETIVO
+Conecta 4 fichas del mismo color en línea (horizontal, vertical o diagonal) para ganar.
+
+🔲  CÓMO JUGAR
+- Haz clic en una columna para dejar caer tu ficha.
+- Los jugadores se turnan: Jugador 1 (azul) y Jugador 2 (rojo).
+
+⚠  TRAMPAS
+- Algunas casillas contienen trampas ocultas.
+- Si caes en una trampa, deberás responder una pregunta de trivia.
+  - Si aciertas: colocas la ficha y ganas un comodín.
+  - Si fallas: una ficha tuya se vuelve gris y se activa la RULETA.
+
+🎰  RULETA
+- La ruleta borra aleatoriamente una fila o columna del tablero (respetando escudos).
+
+⚡  COMODINES (se ganan al responder correctamente la trivia)
+- 💣 BOMBA — Elimina fichas en un área de 5 casillas (cruz).
+- ⏭ SALTAR TURNO — El rival pierde su próximo turno.
+- 🛡 ESCUDO — Protege 2 de tus fichas de bombas y ruleta."
+
+[node name="Button" type="Button" parent="." unique_id=1436088111]
+layout_mode = 0
+offset_left = 59.0
+offset_top = 809.0
+offset_right = 288.0
+offset_bottom = 863.0
+theme_override_colors/font_color = Color(1, 0.18431373, 0.25490198, 1)
+theme_override_fonts/font = ExtResource("3_qq8th")
+theme_override_font_sizes/font_size = 42
+text = "VOLVER AL MENÚ"

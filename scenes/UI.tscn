@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ciwuf6j5erokq"]
 
 [ext_resource type="Script" uid="uid://1lb4nnfouyww" path="res://scripts/ui.gd" id="1_dj8aq"]
+[ext_resource type="FontFile" uid="uid://oggxmpn0mv4y" path="res://assets/fonts/Bangers-Regular.ttf" id="2_ro3t7"]
 
 [node name="UI" type="Node2D" unique_id=1673272493]
 script = ExtResource("1_dj8aq")
@@ -10,18 +11,17 @@ offset_left = 444.0
 offset_top = 113.0
 offset_right = 600.0
 offset_bottom = 136.0
-text = "Turno: Jugador Azul "
+theme_override_fonts/font = ExtResource("2_ro3t7")
+theme_override_font_sizes/font_size = 47
 
 [node name="LabelComodinesJ1" type="Label" parent="." unique_id=864564388]
 offset_left = 57.0
 offset_top = 106.0
 offset_right = 199.0
 offset_bottom = 129.0
-text = "Comodines Azul: 0"
 
 [node name="LabelComodinesJ2" type="Label" parent="." unique_id=2119484574]
 offset_left = 873.0
 offset_top = 114.0
 offset_right = 1016.0
 offset_bottom = 137.0
-text = "Comodines Rojo: 0"

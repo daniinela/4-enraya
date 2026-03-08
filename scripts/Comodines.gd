@@ -1,3 +1,4 @@
+#comodines.gd
 extends Node2D
 
 var juego = null

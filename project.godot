@@ -11,9 +11,17 @@ config_version=5
 [application]
 
 config/name="4enraya"
-run/main_scene="uid://di8nopsvul4nw"
+run/main_scene="uid://btfgibj66mc2a"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[audio]
+
+buses/default_bus_layout="uid://q4eqbqcpfcm0"
+
+[autoload]
+
+Global="*uid://c1jylkvk25d2"
 
 [display]
 

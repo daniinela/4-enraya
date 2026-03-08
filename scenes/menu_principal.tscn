@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://btfgibj66mc2a"]
+
+[ext_resource type="Script" uid="uid://bl0jkptys2agx" path="res://scripts/menu_principal.gd" id="1_i85hu"]
+[ext_resource type="Texture2D" uid="uid://ccov7vkror6ws" path="res://assets/fondo_menu.png" id="2_486ty"]
+[ext_resource type="Texture2D" uid="uid://cbhrif2t52es6" path="res://assets/menu_jugar,reglas,salir.png" id="3_w5ui5"]
+[ext_resource type="Texture2D" uid="uid://c0jfgh2j3laie" path="res://assets/nombre_juego.png" id="4_qcl6i"]
+
+[node name="MenuPrincipal" type="Control" unique_id=1391783316]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_i85hu")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=669002781]
+layout_mode = 0
+offset_right = 1796.0
+offset_bottom = 1131.0
+texture = ExtResource("2_486ty")
+stretch_mode = 6
+
+[node name="TextureRect3" type="TextureRect" parent="." unique_id=141365247]
+layout_mode = 0
+offset_left = 395.0
+offset_top = 60.0
+offset_right = 1419.0
+offset_bottom = 1084.0
+texture = ExtResource("3_w5ui5")
+
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=2020709283]
+layout_mode = 0
+offset_left = 160.0
+offset_top = -197.0
+offset_right = 1696.0
+offset_bottom = 827.0
+texture = ExtResource("4_qcl6i")
+
+[node name="Button" type="Button" parent="." unique_id=511297205]
+layout_mode = 0
+offset_left = 774.0
+offset_top = 447.0
+offset_right = 1054.0
+offset_bottom = 502.0
+text = "JUGAR
+"
+
+[node name="Button2" type="Button" parent="." unique_id=964008308]
+layout_mode = 0
+offset_left = 779.0
+offset_top = 529.0
+offset_right = 1034.0
+offset_bottom = 590.0
+text = "REGLAS"
+
+[node name="Button3" type="Button" parent="." unique_id=1022527967]
+layout_mode = 0
+offset_left = 784.0
+offset_top = 623.0
+offset_right = 1036.0
+offset_bottom = 672.0
+text = "SALIR
+"

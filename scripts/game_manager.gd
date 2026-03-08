@@ -1,3 +1,4 @@
+#game_manager.gd
 extends Node2D
 
 var turno_actual = 1
@@ -93,7 +94,6 @@ func jugador_gano():
 
 func mostrar_pantalla_victoria():
 	var fuente_bangers = load("res://assets/fonts/Bangers-Regular.ttf")
-	var fuente_cinzel = load("res://assets/fonts/Cinzel-Bold.ttf")
 	var fondo = ColorRect.new()
 	fondo.color = Color(0.05, 0.05, 0.15, 0.95)
 	fondo.size = Vector2(1800, 900)
@@ -103,14 +103,14 @@ func mostrar_pantalla_victoria():
 	label.position = Vector2(400, 280)
 	label.add_theme_font_override("font", fuente_bangers)
 	label.add_theme_font_size_override("font_size", 80)
-	if turno_actual == 1:
-		label.text = "🏆 ¡GANÓ DENJI! 🏆"
+	var nombre_ganador = Global.Jugador1 if turno_actual == 1 else Global.Jugador2
+	var personaje_ganador = Global.personaje_jugador1 if turno_actual == 1 else Global.personaje_jugador2
+	label.text = "🏆 ¡GANÓ " + nombre_ganador.to_upper() + "! 🏆"
+	if personaje_ganador == "denji":
 		label.add_theme_color_override("font_color", Color(1.0, 0.85, 0.0))
 	else:
-		label.text = "🏆 ¡GANÓ REZE! 🏆"
 		label.add_theme_color_override("font_color", Color(0.7, 0.2, 1.0))
 	$CanvasLayer.add_child(label)
-
 	var btn = Button.new()
 	btn.text = "JUGAR DE NUEVO"
 	btn.position = Vector2(600, 480)
@@ -134,15 +134,50 @@ func actualizar_ui():
 	ui.actualizar_turno(turno_actual)
 	var denji = $PersonajeDenji
 	var reze = $PersonajeReze
-	if turno_actual == 1:
+	var personaje_turno_actual = Global.personaje_jugador1 if turno_actual == 1 else Global.personaje_jugador2
+	if personaje_turno_actual == "denji":
 		denji.activar_turno()
 		reze.desactivar_turno()
 	else:
-		denji.desactivar_turno()
 		reze.activar_turno()
+		denji.desactivar_turno()
 
 func obtener_conteo_categoria(jugador: int, categoria: String) -> int:
 	return conteo_categorias[jugador][categoria]
 
 func incrementar_conteo_categoria(jugador: int, categoria: String):
 	conteo_categorias[jugador][categoria] += 1
+	
+	
+func juego_empate():
+	juego_activo = false
+	bloqueado = true
+	await get_tree().create_timer(1.0).timeout
+	var fuente_bangers = load("res://assets/fonts/Bangers-Regular.ttf")
+	var fondo = ColorRect.new()
+	fondo.color = Color(0.05, 0.05, 0.15, 0.95)
+	fondo.size = Vector2(1800, 900)
+	fondo.position = Vector2(0, 0)
+	$CanvasLayer.add_child(fondo)
+	var label = Label.new()
+	label.text = "🤝 ¡EMPATE! 🤝"
+	label.position = Vector2(500, 280)
+	label.add_theme_font_override("font", fuente_bangers)
+	label.add_theme_font_size_override("font_size", 80)
+	label.add_theme_color_override("font_color", Color(0.5, 0.8, 1.0))
+	$CanvasLayer.add_child(label)
+	var btn = Button.new()
+	btn.text = "JUGAR DE NUEVO"
+	btn.position = Vector2(600, 480)
+	btn.custom_minimum_size = Vector2(300, 80)
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.2, 0.2, 0.5)
+	style.border_color = Color(0.4, 0.6, 1.0)
+	style.set_border_width_all(4)
+	style.set_corner_radius_all(16)
+	btn.add_theme_stylebox_override("normal", style)
+	btn.add_theme_font_override("font", fuente_bangers)
+	btn.add_theme_font_size_override("font_size", 36)
+	btn.add_theme_color_override("font_color", Color(1, 1, 1))
+	btn.pressed.connect(_reiniciar_juego)
+	$CanvasLayer.add_child(btn)

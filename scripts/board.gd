@@ -1,3 +1,4 @@
+#board.gd
 extends Node2D
 
 const COLUMNAS = 7
@@ -15,7 +16,7 @@ var juego_terminado = false
 var game_manager
 var columna_pendiente = -1
 var fila_pendiente = -1
-
+var animacion_activa = false
 var esperando_bomba = false
 var esperando_escudo = false
 var escudos_restantes = 0
@@ -97,9 +98,15 @@ func actualizar_sprites():
 			if valor == 0:
 				sprite.texture = null
 			elif valor == 1:
-				sprite.texture = textura_azul
+				if Global.personaje_jugador1 == "denji":
+					sprite.texture = textura_azul
+				else:
+					sprite.texture = textura_roja
 			elif valor == 2:
-				sprite.texture = textura_roja
+				if Global.personaje_jugador2 == "denji":
+					sprite.texture = textura_azul
+				else:
+					sprite.texture = textura_roja
 			elif valor == 3:
 				sprite.texture = textura_gris
 			if escudos[fila][col] and valor != 0:
@@ -152,35 +159,15 @@ func _process(delta):
 			ruleta_indice = ruleta_destino
 			queue_redraw()
 			_finalizar_ruleta()
-	if not ruleta_activa:
-		return
-	ruleta_timer -= delta
-	if ruleta_timer <= 0:
-		ruleta_timer = ruleta_velocidad
-		if ruleta_es_columna:
-			ruleta_indice = (ruleta_indice + 1) % COLUMNAS
-		else:
-			ruleta_indice = (ruleta_indice + 1) % FILAS
-		queue_redraw()
-		ruleta_pasos_restantes -= 1
-		if ruleta_pasos_restantes < 10:
-			ruleta_velocidad = lerp(ruleta_velocidad, 0.25, 0.2)
-		if ruleta_pasos_restantes <= 0:
-			ruleta_activa = false
-			ruleta_indice = ruleta_destino
-			queue_redraw()
-			await _animar_ruleta_final(ruleta_destino, ruleta_es_columna)
-			if ruleta_es_columna:
-				borrar_columna(ruleta_destino)
-			else:
-				borrar_fila(ruleta_destino)
 
 func _finalizar_ruleta():
+	animacion_activa = true
 	await _animar_ruleta_final(ruleta_destino, ruleta_es_columna)
 	if ruleta_es_columna:
 		borrar_columna(ruleta_destino)
 	else:
 		borrar_fila(ruleta_destino)
+	animacion_activa = false
 		
 func _animar_ruleta_final(indice: int, es_columna: bool):
 	for _i in range(4):
@@ -197,7 +184,7 @@ func _animar_ruleta_final(indice: int, es_columna: bool):
 		await get_tree().create_timer(0.18).timeout
 
 func _input(event):
-	if juego_terminado or ruleta_activa:
+	if juego_terminado or ruleta_activa or animacion_activa:
 		return
 	if not game_manager or not game_manager.juego_activo:
 		return
@@ -315,6 +302,7 @@ func colocar_ficha_definitiva(columna: int, fila: int):
 		game_manager.jugador_gano()
 	elif tablero_lleno():
 		game_manager.juego_activo = false
+		game_manager.juego_empate()
 	else:
 		game_manager.cambiar_turno()
 
