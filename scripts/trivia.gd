@@ -76,16 +76,17 @@ func _ready():
 	opcion3.position = Vector2(390, 570)
 	opcion4.position = Vector2(760, 570)
 
-	opcion1.custom_minimum_size = Vector2(330, 85)
-	opcion2.custom_minimum_size = Vector2(330, 85)
-	opcion3.custom_minimum_size = Vector2(330, 85)
-	opcion4.custom_minimum_size = Vector2(330, 85)
+	opcion1.custom_minimum_size = Vector2(330, 110)
+	opcion2.custom_minimum_size = Vector2(330, 110)
+	opcion3.custom_minimum_size = Vector2(330, 110)
+	opcion4.custom_minimum_size = Vector2(330, 110)
 
 	ocultar_elementos_respuesta()
 	await get_tree().process_frame
 	mostrar_seleccion_genero()
 
 func _estilizar_boton_respuesta(btn: Button, color: Color):
+	btn.autowrap_mode = TextServer.AUTOWRAP_WORD
 	var style_normal = StyleBoxFlat.new()
 	style_normal.bg_color = color.darkened(0.2)
 	style_normal.border_color = color
