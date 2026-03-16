@@ -176,9 +176,9 @@ func mostrar_seleccion_genero():
 
 func obtener_nivel(categoria: String) -> String:
 	var conteo = juego.obtener_conteo_categoria(jugador_actual, categoria)
-	if conteo <= 1:
+	if conteo == 0:
 		return "facil"
-	elif conteo <= 3:
+	elif conteo <= 2:
 		return "media"
 	else:
 		return "dificil"

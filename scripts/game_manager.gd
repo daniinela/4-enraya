@@ -5,6 +5,7 @@ var turno_actual = 1
 var juego_activo = true
 var turno_saltado = false
 var bloqueado = false
+var jugador_inmune = 0  # 0 = nadie inmune
 
 @onready var tablero = $Board
 @onready var ui = $CanvasLayer/UI
@@ -53,6 +54,7 @@ func iniciar_trivia():
 
 func resultado_trivia(gano: bool):
 	if gano:
+		jugador_inmune = turno_actual  # este jugador queda inmune
 		tablero.resultado_trivia_trampa(true)
 		if not tablero.juego_terminado:
 			await get_tree().create_timer(0.3).timeout

@@ -285,15 +285,16 @@ func intentar_colocar_ficha(columna: int):
 	if not game_manager or not game_manager.juego_activo: return
 	var fila = obtener_fila_disponible(columna)
 	if fila == -1: return
-	if trampas[fila][columna]:
+	if trampas[fila][columna] and game_manager.jugador_inmune != game_manager.turno_actual:
 		columna_pendiente = columna
 		fila_pendiente = fila
 		game_manager.iniciar_trivia()
 		return
 	colocar_ficha_definitiva(columna, fila)
-
+	
 func colocar_ficha_definitiva(columna: int, fila: int):
 	var jugador = game_manager.turno_actual
+	game_manager.jugador_inmune = 0  
 	tablero[fila][columna] = jugador
 	trampas[fila][columna] = false
 	actualizar_sprites()
@@ -301,11 +302,10 @@ func colocar_ficha_definitiva(columna: int, fila: int):
 		juego_terminado = true
 		game_manager.jugador_gano()
 	elif tablero_lleno():
-		game_manager.juego_activo = false
 		game_manager.juego_empate()
 	else:
 		game_manager.cambiar_turno()
-
+		
 func colocar_ficha_sin_cambiar_turno(columna: int, fila: int):
 	var jugador = game_manager.turno_actual
 	tablero[fila][columna] = jugador
@@ -314,6 +314,7 @@ func colocar_ficha_sin_cambiar_turno(columna: int, fila: int):
 	if verificar_victoria(jugador):
 		juego_terminado = true
 		game_manager.jugador_gano()
+		
 
 func resultado_trivia_trampa(gano: bool):
 	if gano:
