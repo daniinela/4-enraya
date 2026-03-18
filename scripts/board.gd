@@ -83,7 +83,7 @@ func inicializar_tablero():
 
 func colocar_trampas_aleatorias():
 	var colocadas = 0
-	while colocadas < 15:
+	while colocadas < 20:
 		var fila = randi() % FILAS
 		var col = randi() % COLUMNAS
 		if not trampas[fila][col]:
