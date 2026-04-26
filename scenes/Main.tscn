@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://di8nopsvul4nw"]
 
-[ext_resource type="Script" uid="uid://c8xaeyy6ufwlh" path="res://scripts/game_manager.gd" id="1_elqb8"]
+[ext_resource type="Script" uid="uid://dej486bnrhu2i" path="res://scripts/controllers/game_controller.gd" id="1_q8u5g"]
 [ext_resource type="PackedScene" uid="uid://bo2e8ehtxsnob" path="res://scenes/Board.tscn" id="2_0bbpv"]
 [ext_resource type="Texture2D" uid="uid://bgdat7gyhahao" path="res://assets/personajes/reze/spritesheet_reze.png" id="2_c01mt"]
 [ext_resource type="Texture2D" uid="uid://c5qant2eam4ts" path="res://assets/personajes/denji/spritesheetDenji.png" id="2_vcsgt"]
@@ -867,7 +867,7 @@ animations = [{
 }]
 
 [node name="Main" type="Node2D" unique_id=1442963063]
-script = ExtResource("1_elqb8")
+script = ExtResource("1_q8u5g")
 
 [node name="PersonajeReze" type="AnimatedSprite2D" parent="." unique_id=1699612244]
 z_index = 10
