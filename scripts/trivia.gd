@@ -1,6 +1,9 @@
 extends Control
 
-signal trivia_terminada(gano, col, fila)
+# FIX: antes esta señal estaba declarada pero nunca se emitía.
+# El flujo llamaba juego.resultado_trivia(gano) directamente.
+# Ahora se emite la señal y game_controller la escucha → MVC correcto.
+signal trivia_terminada(gano)
 
 var jugador_actual = 1
 var juego = null
@@ -271,5 +274,8 @@ func terminar_trivia(gano: bool):
 	opcion3.disabled = true
 	opcion4.disabled = true
 	await get_tree().create_timer(1.5).timeout
-	juego.resultado_trivia(gano)
+
+	# FIX: antes llamaba juego.resultado_trivia(gano) directamente.
+	# Ahora emite la señal → game_controller la escucha → MVC correcto.
+	trivia_terminada.emit(gano)
 	queue_free()

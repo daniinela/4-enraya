@@ -41,14 +41,18 @@ var conteo_categorias = {
 # ─────────────────────────────
 
 func cambiar_turno():
-	# No hacer nada si el juego terminó
+	# FIX #1: Guardia explícita — si el juego terminó no se hace nada.
+	# Antes existía pero el problema era que game_controller.gd emitía
+	# juego_terminado directamente sin pasar por registrar_victoria(),
+	# lo cual dejaba juego_activo = false DESPUÉS de que cambiar_turno()
+	# ya había ejecutado parte de su lógica en algunos flujos async.
 	if not juego_activo:
 		return
 
 	# Desbloquear input
 	bloqueado = false
 
-	# Cambiar jugador (ternario)
+	# Cambiar jugador
 	turno_actual = 2 if turno_actual == 1 else 1
 	turno_cambiado.emit(turno_actual)
 
@@ -63,6 +67,9 @@ func cambiar_turno():
 		# Pequeño delay visual
 		await get_tree().create_timer(1.0).timeout
 
+		# FIX #1: Re-verificar juego_activo después del await.
+		# Si durante el delay se registró una victoria (ruleta u otro efecto),
+		# no se debe continuar cambiando el turno.
 		if not juego_activo:
 			return
 
@@ -77,6 +84,11 @@ func cambiar_turno():
 # ─────────────────────────────
 
 func registrar_victoria():
+	# FIX #3: Esta función es el único punto de entrada para terminar el
+	# juego por victoria. Garantiza que juego_activo=false y bloqueado=true
+	# se establezcan ANTES de emitir la señal, sin importar desde dónde
+	# se llame. Antes game_controller.gd hacía esto inline de forma
+	# inconsistente (a veces sin poner bloqueado=true).
 	if not juego_activo:
 		return
 

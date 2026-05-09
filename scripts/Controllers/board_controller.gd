@@ -1,10 +1,15 @@
-# scripts/Controllers/board_controller.gd
 extends Node2D
 
 signal columna_clickeada(col)
 signal bomba_seleccionada(fila, col)
 signal escudo_seleccionado(fila, col)
-signal accion_post_procesada()
+
+# FIX: se reemplazó accion_post_procesada por ruleta_finalizada.
+# accion_post_procesada era una señal genérica que se emitía al
+# terminar la ruleta, pero _post_accion también se llamaba directo
+# desde _on_bomba y _on_escudo → resultado: turno cambiaba dos veces.
+# ruleta_finalizada SOLO se emite al terminar la animación de ruleta.
+signal ruleta_finalizada()
 
 const COLUMNAS = 7
 const FILAS = 6
@@ -84,16 +89,23 @@ func _finalizar_ruleta():
 		board_model.borrar_fila(ruleta_destino)
 
 	animacion_activa = false
-	accion_post_procesada.emit()
+
+	# FIX: antes emitía accion_post_procesada (señal genérica).
+	# Ahora emite ruleta_finalizada, conectada SOLO a _post_accion
+	# en game_controller. Sin doble disparo.
+	ruleta_finalizada.emit()
 
 func iniciar_ruleta_visual():
 	ruleta_es_columna = randi() % 2 == 0
 	ruleta_destino = randi() % (COLUMNAS if ruleta_es_columna else FILAS)
 	ruleta_pasos_restantes = 30 + randi() % 20
 	ruleta_timer = 0.05
+	ruleta_velocidad = 0.05
 	ruleta_activa = true
 
 func _input(event):
+	# FIX: juego_terminado ahora se pone en true desde _terminar_juego()
+	# en game_controller, así _input queda completamente bloqueado.
 	if juego_terminado or ruleta_activa or animacion_activa:
 		return
 
@@ -109,7 +121,15 @@ func _input(event):
 		if esperando_escudo:
 			var r = board_view.obtener_hueco_click(pos)
 			if r.x >= 0:
-				escudo_seleccionado.emit(r.x, r.y)
+				# FIX: validar que la celda sea una ficha propia
+				# y que no tenga ya un escudo puesto.
+				var jugador = game_controller.state.turno_actual
+				var valida = (
+					board_model.tablero[r.x][r.y] == jugador
+					and not board_model.escudos[r.x][r.y]
+				)
+				if valida:
+					escudo_seleccionado.emit(r.x, r.y)
 			return
 
 		if esperando_bomba:

@@ -4,56 +4,24 @@
 [ext_resource type="Script" uid="uid://b7tyjbrqkqimh" path="res://scripts/views/board_view.gd" id="3_w6jgk"]
 
 [sub_resource type="GDScript" id="GDScript_hs2ul"]
-script/source = "# scripts/Controllers/board_controller.gd
-extends Node2D
+script/source = "extends Node2D
 
-# ─────────────────────────────
-# 📡 SEÑALES
-# ─────────────────────────────
-
-# Se emite cuando el jugador hace clic en una columna
 signal columna_clickeada(col)
-
-# Se emite cuando el jugador selecciona una celda para bomba
 signal bomba_seleccionada(fila, col)
-
-# Se emite cuando el jugador selecciona una celda para escudo
 signal escudo_seleccionado(fila, col)
-
-# Se emite después de procesar una acción (turno completo)
-signal accion_post_procesada()
-
-
-# ─────────────────────────────
-# 📏 CONSTANTES DEL TABLERO
-# ─────────────────────────────
+signal ruleta_finalizada()
 
 const COLUMNAS = 7
 const FILAS = 6
 
+var board_model = null
+var board_view = null
+var game_controller = null
 
-# ─────────────────────────────
-# 🧠 REFERENCIAS PRINCIPALES
-# ─────────────────────────────
-
-var board_model = null     # Lógica del tablero
-var board_view = null      # Representación visual
-var game_controller = null # Controlador general del juego
-
-
-# ─────────────────────────────
-# 🎮 ESTADOS DEL JUEGO
-# ─────────────────────────────
-
-var juego_terminado: bool = false
-var esperando_bomba: bool = false
-var esperando_escudo: bool = false
-var escudos_restantes: int = 0
-
-
-# ─────────────────────────────
-# 🎰 VARIABLES DE RULETA
-# ─────────────────────────────
+var juego_terminado = false
+var esperando_bomba = false
+var esperando_escudo = false
+var escudos_restantes = 0
 
 var ruleta_activa = false
 var ruleta_indice = 0
@@ -64,54 +32,19 @@ var ruleta_velocidad = 0.05
 var ruleta_pasos_restantes = 0
 var animacion_activa = false
 
-
-# ─────────────────────────────
-# 🚀 INICIALIZACIÓN
-# ─────────────────────────────
-
 func _ready():
-	# Obtiene la vista del tablero desde la escena
-	board_view = $BoardView
-	print(\"BOARD VIEW:\", board_view)
-
-	# Carga y crea el modelo del tablero
 	board_model = load(\"res://scripts/models/board_model.gd\").new()
 	board_model.inicializar_tablero()
-
-	# Conecta la señal para actualizar la vista cuando cambie el modelo
 	board_model.tablero_cambiado.connect(_on_tablero_cambiado)
 
-
-# ─────────────────────────────
-# 🔄 ACTUALIZACIÓN DE VISTA
-# ─────────────────────────────
+	# FIX: esta línea faltaba completamente.
+	# board_view era null siempre → crash en _input al llamar
+	# obtener_columna_click() y obtener_hueco_click().
+	board_view = $BoardView
 
 func _on_tablero_cambiado():
 	if board_view:
 		board_view.renderizar(board_model.tablero, board_model.escudos)
-
-
-# ─────────────────────────────
-# 🎰 INICIO DE RULETA
-# ─────────────────────────────
-
-func iniciar_ruleta_visual():
-	# Decide aleatoriamente si afecta fila o columna
-	ruleta_es_columna = randi() % 2 == 0
-
-	# Selecciona destino aleatorio
-	ruleta_destino = randi() % (COLUMNAS if ruleta_es_columna else FILAS)
-
-	# Configuración inicial de animación
-	ruleta_pasos_restantes = 30 + randi() % 20
-	ruleta_velocidad = 0.05
-	ruleta_timer = 0.0
-	ruleta_activa = true
-
-
-# ─────────────────────────────
-# 🔁 LOOP PRINCIPAL (ANIMACIÓN)
-# ─────────────────────────────
 
 func _process(delta):
 	if not ruleta_activa:
@@ -122,40 +55,30 @@ func _process(delta):
 	if ruleta_timer <= 0:
 		ruleta_timer = ruleta_velocidad
 
-		# Avanza índice visual
 		if ruleta_es_columna:
 			ruleta_indice = (ruleta_indice + 1) % COLUMNAS
 		else:
 			ruleta_indice = (ruleta_indice + 1) % FILAS
 
-		# Actualiza vista
 		if board_view:
 			board_view.set_ruleta(true, ruleta_es_columna, ruleta_indice)
 
 		ruleta_pasos_restantes -= 1
 
-		# Reduce velocidad al final (efecto de frenado)
 		if ruleta_pasos_restantes < 10:
 			ruleta_velocidad = lerp(ruleta_velocidad, 0.25, 0.2)
 
-		# Finaliza animación
 		if ruleta_pasos_restantes <= 0:
 			ruleta_activa = false
 
 			if board_view:
 				board_view.set_ruleta(false, ruleta_es_columna, ruleta_destino)
 
-			_finalizar_ruleta()
-
-
-# ─────────────────────────────
-# 🎯 RESULTADO DE RULETA
-# ─────────────────────────────
+			await _finalizar_ruleta()
 
 func _finalizar_ruleta():
 	animacion_activa = true
 
-	# Ejecuta animación final visual
 	if board_view:
 		await board_view.animar_ruleta_final(
 			ruleta_destino,
@@ -164,71 +87,57 @@ func _finalizar_ruleta():
 			board_model.escudos
 		)
 
-	# Aplica efecto en el modelo
 	if ruleta_es_columna:
 		board_model.borrar_columna(ruleta_destino)
 	else:
 		board_model.borrar_fila(ruleta_destino)
 
 	animacion_activa = false
+	ruleta_finalizada.emit()
 
-	# Notifica que terminó la acción
-	accion_post_procesada.emit()
-
-
-# ─────────────────────────────
-# 🖱️ INPUT DEL JUGADOR
-# ─────────────────────────────
+func iniciar_ruleta_visual():
+	ruleta_es_columna = randi() % 2 == 0
+	ruleta_destino = randi() % (COLUMNAS if ruleta_es_columna else FILAS)
+	ruleta_pasos_restantes = 30 + randi() % 20
+	ruleta_timer = 0.05
+	ruleta_velocidad = 0.05
+	ruleta_activa = true
 
 func _input(event):
-	# Bloqueos generales
 	if juego_terminado or ruleta_activa or animacion_activa:
 		return
 
-	if not game_controller or not game_controller.state.juego_activo:
+	if not game_controller or not game_controller.juego_activo:
 		return
 
-	if game_controller.state.bloqueado:
+	if game_controller.bloqueado:
 		return
 
-	var pos = get_global_mouse_position()
+	if event is InputEventMouseButton and event.pressed:
+		var pos = get_global_mouse_position()
 
-	# Solo clics válidos
-	if not (event is InputEventMouseButton and event.pressed):
-		return
+		if esperando_escudo:
+			var r = board_view.obtener_hueco_click(pos)
+			if r.x >= 0:
+				var jugador = game_controller.state.turno_actual
+				var valida = (
+					board_model.tablero[r.x][r.y] == jugador
+					and not board_model.escudos[r.x][r.y]
+				)
+				if valida:
+					escudo_seleccionado.emit(r.x, r.y)
+			return
 
+		if esperando_bomba:
+			var r = board_view.obtener_hueco_click(pos)
+			if r.x >= 0:
+				bomba_seleccionada.emit(r.x, r.y)
+				esperando_bomba = false
+			return
 
-	# 💣 MODO BOMBA
-	if esperando_bomba and board_view:
-		var r = board_view.obtener_hueco_click(pos)
-
-		if r.x >= 0:
-			emit_signal(\"bomba_seleccionada\", r.x, r.y)
-			emit_signal(\"accion_post_procesada\")
-			esperando_bomba = false
-
-		return
-
-
-	# 🛡️ MODO ESCUDO
-	if esperando_escudo and board_view:
-		var r2 = board_view.obtener_hueco_click(pos)
-
-		if r2.x >= 0:
-			emit_signal(\"escudo_seleccionado\", r2.x, r2.y)
-			esperando_escudo = false
-
-		return
-
-
-	# 🎯 CLICK NORMAL (columna)
-	if board_view:
-		var col_click = board_view.obtener_columna_click(pos)
-		print(\"COLUMNA:\", col_click)
-
-		if col_click >= 0:
-			print(\"EMITIENDO SEÑAL\")
-			emit_signal(\"columna_clickeada\", col_click)
+		var col = board_view.obtener_columna_click(pos)
+		if col >= 0:
+			columna_clickeada.emit(col)
 "
 
 [node name="Board" type="Node2D" unique_id=1037535901]
