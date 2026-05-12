@@ -8,7 +8,6 @@ extends Node2D
 const COLUMNAS = 7
 const FILAS = 6
 
-# Colores de efectos visuales
 const COLOR_RULETA = Color(1.0, 0.85, 0.0, 0.6)
 const COLOR_BOMBA_PREVIEW = Color(1.0, 0.3, 0.0, 0.6)
 
@@ -17,7 +16,7 @@ const COLOR_BOMBA_PREVIEW = Color(1.0, 0.3, 0.0, 0.6)
 # 🎨 RECURSOS VISUALES
 # ─────────────────────────────
 
-var sprites_fichas = []       # Matriz de sprites (TextureRect)
+var sprites_fichas = []
 var textura_azul: Texture2D
 var textura_roja: Texture2D
 var textura_gris: Texture2D
@@ -50,16 +49,13 @@ func _ready():
 	sprite_tablero = get_parent().get_node("spriteTablero")
 	grid = get_parent().get_node("fichas")
 
-	# Asegura orden de render
 	sprite_tablero.z_index = 2
 	grid.z_index = 1
 
-	# Cargar texturas
 	textura_azul = load("res://assets/Captura de pantalla 2026-02-25 191835.png")
 	textura_roja = load("res://assets/Captura de pantalla 2026-02-25 185600.png")
 	textura_gris = load("res://assets/Captura de pantalla 2026-02-25 190012.png")
 
-	# Crear sprites dinámicamente
 	_crear_sprites_fichas()
 
 	await get_tree().process_frame
@@ -80,7 +76,6 @@ func _crear_sprites_fichas() -> void:
 		for col in range(COLUMNAS):
 			var sprite = TextureRect.new()
 
-			# Configuración visual
 			sprite.custom_minimum_size = Vector2(120, 94)
 			sprite.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 			sprite.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -103,20 +98,15 @@ func renderizar(tablero: Array, escudos: Array) -> void:
 			var sprite = sprites_fichas[fila][col]
 			var valor = tablero[fila][col]
 
-			# Selección de textura según tipo
 			if valor == 0:
 				sprite.texture = null
-
 			elif valor == 1:
 				sprite.texture = textura_azul if Global.personaje_jugador1 == "denji" else textura_roja
-
 			elif valor == 2:
 				sprite.texture = textura_azul if Global.personaje_jugador2 == "denji" else textura_roja
-
 			elif valor == 3:
 				sprite.texture = textura_gris
 
-			# Efecto visual de escudo
 			if escudos[fila][col] and valor != 0:
 				sprite.modulate = Color(1.0, 0.85, 0.0)
 			else:
@@ -169,9 +159,7 @@ func animar_ruleta_final(indice: int, es_columna: bool, tablero: Array, escudos:
 					sprites_fichas[indice][col].modulate = Color(1.0, 0.15, 0.15)
 
 		await get_tree().create_timer(0.18).timeout
-
 		renderizar(tablero, escudos)
-
 		await get_tree().create_timer(0.18).timeout
 
 
@@ -232,13 +220,11 @@ func _limpiar_tintes(tablero: Array, escudos: Array) -> void:
 # ─────────────────────────────
 
 func _draw():
-	# Preview bomba
 	for casilla in bomba_preview:
 		var rect = get_cell_rect(casilla.x, casilla.y)
 		draw_rect(rect, COLOR_BOMBA_PREVIEW)
 		draw_rect(rect, Color(1.0, 0.1, 0.1, 1.0), false, 3.0)
 
-	# Highlight ruleta
 	if ruleta_activa:
 		var cell = Vector2(120, 94)
 

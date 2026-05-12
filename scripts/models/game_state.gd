@@ -41,43 +41,21 @@ var conteo_categorias = {
 # ─────────────────────────────
 
 func cambiar_turno():
-	# FIX #1: Guardia explícita — si el juego terminó no se hace nada.
-	# Antes existía pero el problema era que game_controller.gd emitía
-	# juego_terminado directamente sin pasar por registrar_victoria(),
-	# lo cual dejaba juego_activo = false DESPUÉS de que cambiar_turno()
-	# ya había ejecutado parte de su lógica en algunos flujos async.
 	if not juego_activo:
 		return
 
-	# Desbloquear input
 	bloqueado = false
 
-	# Cambiar jugador
-	turno_actual = 2 if turno_actual == 1 else 1
-	turno_cambiado.emit(turno_actual)
-
-	# ─── MECÁNICA: SALTAR TURNO ───
 	if turno_saltado:
 		turno_saltado = false
-
-		# Bloquear mientras se procesa el salto
-		bloqueado = true
+		# FIX: "saltar turno" significa el rival pierde su turno, así que
+		# turno_actual NO cambia — el mismo jugador vuelve a jugar.
+		# Eliminamos el await y el doble emit que causaban el flash de 1 segundo.
 		turno_saltado_signal.emit()
-
-		# Pequeño delay visual
-		await get_tree().create_timer(1.0).timeout
-
-		# FIX #1: Re-verificar juego_activo después del await.
-		# Si durante el delay se registró una victoria (ruleta u otro efecto),
-		# no se debe continuar cambiando el turno.
-		if not juego_activo:
-			return
-
-		# Saltar turno → cambia otra vez
-		turno_actual = 2 if turno_actual == 1 else 1
-		bloqueado = false
 		turno_cambiado.emit(turno_actual)
-
+	else:
+		turno_actual = 2 if turno_actual == 1 else 1
+		turno_cambiado.emit(turno_actual)
 
 # ─────────────────────────────
 # 🏆 FIN DEL JUEGO

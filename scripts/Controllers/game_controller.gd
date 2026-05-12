@@ -66,10 +66,6 @@ func _iniciar_trivia(col, fila):
 	trivia.fila = fila
 	trivia.juego = self
 
-	# FIX: la señal se conecta aquí, en el momento en que se
-	# crea la instancia de trivia. Antes no se conectaba nunca
-	# porque se usaba llamada directa. Ahora el flujo es:
-	# trivia emite trivia_terminada → game_controller._on_trivia_terminada
 	trivia.trivia_terminada.connect(_on_trivia_terminada)
 
 func _on_trivia_terminada(gano: bool):
@@ -83,24 +79,18 @@ func _on_trivia_terminada(gano: bool):
 		board_ctrl.iniciar_ruleta_visual()
 
 func _colocar_piedra_aleatoria():
-	# Buscar columnas que tengan al menos un espacio libre
 	var columnas_validas = []
 
 	for col in range(7):
 		if board_ctrl.board_model.obtener_fila_disponible(col) != -1:
 			columnas_validas.append(col)
 
-	# Si todas las columnas están llenas, no hacer nada
 	if columnas_validas.is_empty():
 		return
 
-	# Elegir columna aleatoria válida
 	var col = columnas_validas[randi() % columnas_validas.size()]
-
-	# Usar la misma lógica de gravedad que las fichas normales
 	var fila = board_ctrl.board_model.obtener_fila_disponible(col)
 
-	# Colocar piedra (valor 3)
 	board_ctrl.board_model.tablero[fila][col] = 3
 	board_ctrl.board_model.tablero_cambiado.emit()
 
@@ -116,8 +106,20 @@ func aplicar_comodin(tipo: String):
 			board_ctrl.esperando_bomba = true
 
 		"escudo":
+			var jugador = state.turno_actual
+			var fichas_disponibles = 0
+			for fila in range(6):
+				for col in range(7):
+					if (board_ctrl.board_model.tablero[fila][col] == jugador
+							and not board_ctrl.board_model.escudos[fila][col]):
+						fichas_disponibles += 1
+
+			if fichas_disponibles == 0:
+				state.cambiar_turno()
+				return
+
 			board_ctrl.esperando_escudo = true
-			board_ctrl.escudos_restantes = 2
+			board_ctrl.escudos_restantes = min(2, fichas_disponibles)
 
 		"saltar_turno":
 			state.turno_saltado = true
@@ -136,8 +138,17 @@ func _on_escudo(fila, col):
 	board_ctrl.escudos_restantes -= 1
 
 	if board_ctrl.escudos_restantes > 0:
-		ui_view.mostrar_mensaje("Selecciona la 2ª ficha a proteger")
-		return
+		var jugador = state.turno_actual
+		var fichas_libres = 0
+		for f in range(6):
+			for c in range(7):
+				if (board_ctrl.board_model.tablero[f][c] == jugador
+						and not board_ctrl.board_model.escudos[f][c]):
+					fichas_libres += 1
+
+		if fichas_libres > 0:
+			ui_view.mostrar_mensaje("Selecciona la 2ª ficha a proteger")
+			return
 
 	board_ctrl.esperando_escudo = false
 	state.bloqueado = true
