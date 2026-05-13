@@ -1,14 +1,14 @@
-[gd_scene format=3 uid="uid://bo2e8ehtxsnob"]
-
-[ext_resource type="Texture2D" uid="uid://dgdu4ij5q4sl8" path="res://assets/ChatGPT Image 25 feb 2026, 19_22_01.png" id="2_hs2ul"]
-[ext_resource type="Script" uid="uid://b7tyjbrqkqimh" path="res://scripts/views/board_view.gd" id="3_w6jgk"]
-
-[sub_resource type="GDScript" id="GDScript_hs2ul"]
-script/source = "extends Node2D
+extends Node2D
 
 signal columna_clickeada(col)
 signal bomba_seleccionada(fila, col)
 signal escudo_seleccionado(fila, col)
+
+# FIX: se reemplazó accion_post_procesada por ruleta_finalizada.
+# accion_post_procesada era una señal genérica que se emitía al
+# terminar la ruleta, pero _post_accion también se llamaba directo
+# desde _on_bomba y _on_escudo → resultado: turno cambiaba dos veces.
+# ruleta_finalizada SOLO se emite al terminar la animación de ruleta.
 signal ruleta_finalizada()
 
 const COLUMNAS = 7
@@ -33,14 +33,10 @@ var ruleta_pasos_restantes = 0
 var animacion_activa = false
 
 func _ready():
-	board_model = load(\"res://scripts/models/board_model.gd\").new()
+	board_model = load("res://scripts/models/board_model.gd").new()
 	board_model.inicializar_tablero()
 	board_model.tablero_cambiado.connect(_on_tablero_cambiado)
-
-	# FIX: esta línea faltaba completamente.
-	# board_view era null siempre → crash en _input al llamar
-	# obtener_columna_click() y obtener_hueco_click().
-	board_view = $BoardView
+	print("Hola")
 
 func _on_tablero_cambiado():
 	if board_view:
@@ -93,6 +89,10 @@ func _finalizar_ruleta():
 		board_model.borrar_fila(ruleta_destino)
 
 	animacion_activa = false
+
+	# FIX: antes emitía accion_post_procesada (señal genérica).
+	# Ahora emite ruleta_finalizada, conectada SOLO a _post_accion
+	# en game_controller. Sin doble disparo.
 	ruleta_finalizada.emit()
 
 func iniciar_ruleta_visual():
@@ -104,6 +104,8 @@ func iniciar_ruleta_visual():
 	ruleta_activa = true
 
 func _input(event):
+	# FIX: juego_terminado ahora se pone en true desde _terminar_juego()
+	# en game_controller, así _input queda completamente bloqueado.
 	if juego_terminado or ruleta_activa or animacion_activa:
 		return
 
@@ -119,6 +121,8 @@ func _input(event):
 		if esperando_escudo:
 			var r = board_view.obtener_hueco_click(pos)
 			if r.x >= 0:
+				# FIX: validar que la celda sea una ficha propia
+				# y que no tenga ya un escudo puesto.
 				var jugador = game_controller.state.turno_actual
 				var valida = (
 					board_model.tablero[r.x][r.y] == jugador
@@ -138,23 +142,3 @@ func _input(event):
 		var col = board_view.obtener_columna_click(pos)
 		if col >= 0:
 			columna_clickeada.emit(col)
-"
-
-[node name="Board" type="Node2D" unique_id=1037535901]
-script = SubResource("GDScript_hs2ul")
-
-[node name="BoardView" type="Node2D" parent="." unique_id=1836213780]
-script = ExtResource("3_w6jgk")
-
-[node name="fichas" type="GridContainer" parent="." unique_id=728526396]
-custom_minimum_size = Vector2(630, 540)
-offset_left = 337.0
-offset_top = 84.0
-offset_right = 1180.0
-offset_bottom = 650.0
-columns = 7
-
-[node name="spriteTablero" type="Sprite2D" parent="." unique_id=1318706239]
-position = Vector2(782.99994, 334)
-scale = Vector2(0.881, 0.85)
-texture = ExtResource("2_hs2ul")

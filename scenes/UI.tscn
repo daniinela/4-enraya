@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ciwuf6j5erokq"]
 
-[ext_resource type="Script" uid="uid://1lb4nnfouyww" path="res://scripts/ui.gd" id="1_dj8aq"]
+[ext_resource type="Script" uid="uid://1lb4nnfouyww" path="res://scripts/views/ui_view.gd" id="1_dj8aq"]
 [ext_resource type="FontFile" uid="uid://oggxmpn0mv4y" path="res://assets/fonts/Bangers-Regular.ttf" id="2_ro3t7"]
 
 [node name="UI" type="Node2D" unique_id=1673272493]

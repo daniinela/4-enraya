@@ -1,15 +1,15 @@
-#trivia.gd
 extends Control
 
-@onready var label_pregunta = $LabelPregunta
-@onready var label_temporizador = $LabelTemporizador
-@onready var opcion1 = $Opcion1
-@onready var opcion2 = $Opcion2
-@onready var opcion3 = $Opcion3
-@onready var opcion4 = $Opcion4
+# FIX: antes esta señal estaba declarada pero nunca se emitía.
+# El flujo llamaba juego.resultado_trivia(gano) directamente.
+# Ahora se emite la señal y game_controller la escucha → MVC correcto.
+signal trivia_terminada(gano)
 
 var jugador_actual = 1
 var juego = null
+var col
+var fila
+
 var pregunta_actual = {}
 var respuesta_correcta = 0
 var tiempo_restante = 10.0
@@ -36,6 +36,13 @@ var fondo = null
 
 var fuente_bangers: FontFile
 var fuente_cinzel: FontFile
+
+@onready var label_pregunta = $LabelPregunta
+@onready var label_temporizador = $LabelTemporizador
+@onready var opcion1 = $Opcion1
+@onready var opcion2 = $Opcion2
+@onready var opcion3 = $Opcion3
+@onready var opcion4 = $Opcion4
 
 func _ready():
 	fuente_bangers = load("res://assets/fonts/Bangers-Regular.ttf")
@@ -115,11 +122,9 @@ func ocultar_elementos_respuesta():
 
 func mostrar_seleccion_genero():
 	fase = "eligiendo_genero"
-
 	for btn in botones_genero:
 		btn.queue_free()
 	botones_genero.clear()
-
 	if titulo_genero:
 		titulo_genero.queue_free()
 
@@ -175,7 +180,7 @@ func mostrar_seleccion_genero():
 		botones_genero.append(btn)
 
 func obtener_nivel(categoria: String) -> String:
-	var conteo = juego.obtener_conteo_categoria(jugador_actual, categoria)
+	var conteo = juego.state.obtener_conteo_categoria(jugador_actual, categoria)
 	if conteo == 0:
 		return "facil"
 	elif conteo <= 2:
@@ -187,7 +192,6 @@ func _on_genero_elegido(categoria: String):
 	for btn in botones_genero:
 		btn.queue_free()
 	botones_genero.clear()
-
 	if titulo_genero:
 		titulo_genero.queue_free()
 
@@ -230,7 +234,7 @@ func cargar_pregunta(categoria: String):
 	opcion4.text = "D)  " + pregunta_actual["opciones"][3]
 
 	respuesta_correcta = pregunta_actual["correcta"]
-	juego.incrementar_conteo_categoria(jugador_actual, categoria)
+	juego.state.incrementar_conteo_categoria(jugador_actual, categoria)
 
 func _process(delta):
 	if not temporizador_activo:
@@ -270,5 +274,8 @@ func terminar_trivia(gano: bool):
 	opcion3.disabled = true
 	opcion4.disabled = true
 	await get_tree().create_timer(1.5).timeout
-	juego.resultado_trivia(gano)
+
+	# FIX: antes llamaba juego.resultado_trivia(gano) directamente.
+	# Ahora emite la señal → game_controller la escucha → MVC correcto.
+	trivia_terminada.emit(gano)
 	queue_free()
